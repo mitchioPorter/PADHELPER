@@ -13,6 +13,7 @@
 		7896677320719CBD00226C21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7896677220719CBD00226C21 /* Assets.xcassets */; };
 		7896677620719CBD00226C21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896677420719CBD00226C21 /* LaunchScreen.storyboard */; };
 		7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */; };
+		789667952072D15100226C21 /* MonsterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789667942072D15100226C21 /* MonsterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		7896677520719CBD00226C21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7896677720719CBD00226C21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseTableViewController.swift; sourceTree = "<group>"; };
+		789667942072D15100226C21 /* MonsterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				7896677720719CBD00226C21 /* Info.plist */,
 				7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */,
 				7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */,
+				789667942072D15100226C21 /* MonsterCell.swift */,
 			);
 			path = PADHelper;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
 				7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */,
 				7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */,

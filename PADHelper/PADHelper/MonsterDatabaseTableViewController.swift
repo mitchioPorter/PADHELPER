@@ -10,6 +10,7 @@ import UIKit
 
 class MonsterDatabaseTableViewController: UITableViewController {
     
+    @IBOutlet var monstertable: UITableView!
     
     // Struct to represent each monster found in the PADHerder api
     // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
@@ -47,40 +48,33 @@ class MonsterDatabaseTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
-        
-        
         // load the url
         guard let url = URL(string: api_url) else { return }
+    
+        
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!.localizedDescription)
             }
-            
             guard let data = data else { return }
-            
-            //Implement JSON decoding and parsing
+            // Implement JSON decoding and parsing
             do {
-                //Decode retrived data with JSONDecoder and assing type of Article object
+                // Decode retrived data with JSONDecoder and assing type of Article object
                 let monsterData = try JSONDecoder().decode([Monster].self, from: data)
                 
-                //Get back to the main queue
+                // Get back to the main queue
                 DispatchQueue.main.async {
                     self.monsters = monsterData
+                    self.monstertable.reloadData()
                 }
                 
-                for monster in monsterData {
-                    print (monster.name)
-                }
             } catch let jsonError {
                 print(jsonError)
             }
             
             }.resume()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,15 +94,15 @@ class MonsterDatabaseTableViewController: UITableViewController {
         return monsters.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
+        
+        cell.textLabel!.text! = monsters[indexPath.row].name!
+        cell.detailTextLabel!.text! = String(monsters[indexPath.row].id!)
+        
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

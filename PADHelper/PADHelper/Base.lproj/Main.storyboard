@@ -21,7 +21,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="monstercell" textLabel="oRl-oQ-vnp" detailTextLabel="QBK-XW-mJo" style="IBUITableViewCellStyleValue1" id="isM-P7-EkD">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="isM-P7-EkD" id="LD4-Z0-p9W">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="isM-P7-EkD" id="LD4-Z0-p9W" customClass="MonsterCell" customModule="PADHelper" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -49,6 +49,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="594-Fa-3cv"/>
+                    <connections>
+                        <outlet property="monstertable" destination="y22-vi-saN" id="eoe-k4-GYh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92o-u3-YNY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
