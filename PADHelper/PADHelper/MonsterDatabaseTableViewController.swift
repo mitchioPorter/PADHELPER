@@ -10,38 +10,40 @@ import UIKit
 
 class MonsterDatabaseTableViewController: UITableViewController {
     
+    
+    // Struct to represent each monster found in the PADHerder api
+    // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
     struct Monster: Codable {
-        var active_skill:String
-        var atk_max:Int
-        var atk_min:Int
-        var atk_scale:Double
-        var awoken_skills:[String]
-        var element:Int
-        var element2:Int
-        var feed_xp:Double
-        var hp_max:Int
-        var hp_min:Int
-        var hp_scale:Double
-        var id:Int
-        var jp_only:Bool
-        var leader_skill:String
-        var max_level:Int
-        var name:String
-        var rarity:Int
-        var rcv_max:Int
-        var rcv_min:Int
-        var rcv_scale:Double
-        var team_cost:Int
-        var type:Int
-        var type2:Int
-        var xp_curve:Int
+        var active_skill:String?
+        var atk_max:Int?
+        var atk_min:Int?
+        var atk_scale:Double?
+        var awoken_skills:[Int]?
+        var element:Int?
+        var element2:Int?
+        var feed_xp:Double?
+        var hp_max:Int?
+        var hp_min:Int?
+        var hp_scale:Double?
+        var id:Int?
+        var jp_only:Bool?
+        var leader_skill:String?
+        var max_level:Int?
+        var name:String?
+        var rarity:Int?
+        var rcv_max:Int?
+        var rcv_min:Int?
+        var rcv_scale:Double?
+        var team_cost:Int?
+        var type:Int?
+        var type2:Int?
+        var xp_curve:Int?
     }
 
     // url for PadHerder monster api
     let api_url:String = "https://www.padherder.com/api/monsters/"
     
-    var monsters:[Monster] = []
-
+    var monsters:[Monster]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +72,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
                 print(jsonError)
             }
             
-            
             }.resume()
-
-        for monster in monsters {
-            print (monster.name)
-        }
         
     }
 
