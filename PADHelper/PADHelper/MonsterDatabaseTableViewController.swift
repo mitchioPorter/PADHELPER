@@ -43,10 +43,14 @@ class MonsterDatabaseTableViewController: UITableViewController {
     // url for PadHerder monster api
     let api_url:String = "https://www.padherder.com/api/monsters/"
     
-    var monsters:[Monster]?
+    var monsters:[Monster] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
+        
         
         // load the url
         guard let url = URL(string: api_url) else { return }
@@ -67,7 +71,10 @@ class MonsterDatabaseTableViewController: UITableViewController {
                 DispatchQueue.main.async {
                     self.monsters = monsterData
                 }
-
+                
+                for monster in monsterData {
+                    print (monster.name)
+                }
             } catch let jsonError {
                 print(jsonError)
             }
@@ -85,12 +92,12 @@ class MonsterDatabaseTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return monsters.count
     }
 
     /*
