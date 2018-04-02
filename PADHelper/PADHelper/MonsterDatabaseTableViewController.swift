@@ -73,7 +73,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
                 }
                 
                 for monster in monsterData {
-                    print (monster.name)
+                    print (monster.name!)
                 }
             } catch let jsonError {
                 print(jsonError)
