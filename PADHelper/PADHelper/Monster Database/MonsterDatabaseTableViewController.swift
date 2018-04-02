@@ -13,6 +13,8 @@ import UIKit
 class MonsterDatabaseTableViewController: UITableViewController {
     
     @IBOutlet var monstertable: UITableView!
+    @IBOutlet weak var monstersearch: UISearchBar!
+
     
     // Struct to represent each monster found in the PADHerder api
     // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
@@ -43,7 +45,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
         var xp_curve:Int?
     }
  
-
+    
     // url for PadHerder monster api
     let api_url:String = "https://www.padherder.com/api/monsters/"
     
