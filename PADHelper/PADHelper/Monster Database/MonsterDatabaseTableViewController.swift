@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class MonsterDatabaseTableViewController: UITableViewController {
     
     @IBOutlet var monstertable: UITableView!
@@ -40,6 +42,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
         var type2:Int?
         var xp_curve:Int?
     }
+ 
 
     // url for PadHerder monster api
     let api_url:String = "https://www.padherder.com/api/monsters/"
@@ -52,8 +55,6 @@ class MonsterDatabaseTableViewController: UITableViewController {
         // load the url
         guard let url = URL(string: api_url) else { return }
     
-        
-        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!.localizedDescription)
@@ -96,57 +97,34 @@ class MonsterDatabaseTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
-        
         cell.textLabel!.text! = monsters[indexPath.row].name!
         cell.detailTextLabel!.text! = String(monsters[indexPath.row].id!)
-        
-        
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "monsterviewsegue") {
+            if let monsterView = segue.destination as? MonsterView {
+                // Get the current table entry's index
+                let index = self.tableView.indexPathForSelectedRow?.row
+                // Get the object associated with that cell and pass it to the next VC
+                
+                let monster = monsters[index!]
+                
+                monsterView.monsterName = monster.name!
+                monsterView.maxhp = monster.hp_max!
+                monsterView.maxatk = monster.atk_max!
+                monsterView.maxrcv = monster.rcv_max!
+                monsterView.activeskill = monster.active_skill!
+                monsterView.leaderskill = monster.leader_skill!
+            }
+        }
     }
-    */
 
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
 		7896676920719CBD00226C21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7896676820719CBD00226C21 /* AppDelegate.swift */; };
 		7896676E20719CBD00226C21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896676C20719CBD00226C21 /* Main.storyboard */; };
 		7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
 		7896676520719CBD00226C21 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7896676820719CBD00226C21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7896676D20719CBD00226C21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -39,6 +41,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7891E26B2072D81D00321E7B /* Monster Database */ = {
+			isa = PBXGroup;
+			children = (
+				7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */,
+				789667942072D15100226C21 /* MonsterCell.swift */,
+				7891E26C2072D84F00321E7B /* MonsterView.swift */,
+			);
+			path = "Monster Database";
+			sourceTree = "<group>";
+		};
 		7896675C20719CBD00226C21 = {
 			isa = PBXGroup;
 			children = (
@@ -58,14 +70,13 @@
 		7896676720719CBD00226C21 /* PADHelper */ = {
 			isa = PBXGroup;
 			children = (
+				7891E26B2072D81D00321E7B /* Monster Database */,
 				7896676820719CBD00226C21 /* AppDelegate.swift */,
 				7896676C20719CBD00226C21 /* Main.storyboard */,
 				7896677220719CBD00226C21 /* Assets.xcassets */,
 				7896677420719CBD00226C21 /* LaunchScreen.storyboard */,
 				7896677720719CBD00226C21 /* Info.plist */,
 				7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */,
-				7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */,
-				789667942072D15100226C21 /* MonsterCell.swift */,
 			);
 			path = PADHelper;
 			sourceTree = "<group>";
@@ -144,6 +155,7 @@
 			files = (
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
+				7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */,
 				7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */,
 				7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */,
 			);
