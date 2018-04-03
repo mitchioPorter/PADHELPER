@@ -17,7 +17,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     // Struct to represent each monster found in the PADHerder api
     // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
-    struct Monster: Codable {
+    struct Monster: Decodable {
         var active_skill:String?
         var atk_max:Int?
         var atk_min:Int?
@@ -41,10 +41,12 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         var team_cost:Int?
         var type:Int?
         var type2:Int?
+        var type3:Int?
         var xp_curve:Int?
+        var image40_href:String?
+        var image60_href:String?
     }
  
-    
     // url for PadHerder monster api
     let monster_api_url:String = "https://www.padherder.com/api/monsters/"
     
@@ -141,9 +143,9 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
         else {
             isSearching = true
-            filteredMonsters = monsters.filter({$0.name!.contains(searchBar.text!)})
+            filteredMonsters = monsters.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
             monstertable.reloadData()
-        }
+            }
     }
 
     // MARK: - Navigation
