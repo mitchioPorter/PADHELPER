@@ -7,14 +7,13 @@
 //
 
 import UIKit
+import Foundation
 
-
-
-class MonsterDatabaseTableViewController: UITableViewController {
+class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var monstertable: UITableView!
+    
     @IBOutlet weak var monstersearch: UISearchBar!
-
     
     // Struct to represent each monster found in the PADHerder api
     // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
@@ -47,16 +46,35 @@ class MonsterDatabaseTableViewController: UITableViewController {
  
     
     // url for PadHerder monster api
-    let api_url:String = "https://www.padherder.com/api/monsters/"
+    let monster_api_url:String = "https://www.padherder.com/api/monsters/"
     
+    // url for PadHerder leader skill api
+    let leader_skill_api_url:String = "https://www.padherder.com/api/leader_skills/"
+    
+    
+    // array of Monster objects pulled from the API
     var monsters:[Monster] = []
+    
+    // array of filtered monsters for the search bar
+    var filteredMonsters:[Monster] = []
+    
+    // a bool to tell when searching
+    var isSearching = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        monstersearch.delegate = self
+        monstersearch.returnKeyType = UIReturnKeyType.done
+        
+        fillMonsterData()
+    }
+    
+    private func fillMonsterData() {
         // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
         // load the url
-        guard let url = URL(string: api_url) else { return }
-    
+        guard let url = URL(string: monster_api_url) else { return }
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!.localizedDescription)
@@ -72,11 +90,9 @@ class MonsterDatabaseTableViewController: UITableViewController {
                     self.monsters = monsterData
                     self.monstertable.reloadData()
                 }
-                
             } catch let jsonError {
                 print(jsonError)
             }
-            
             }.resume()
     }
 
@@ -86,39 +102,62 @@ class MonsterDatabaseTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        if (isSearching) {
+            return filteredMonsters.count
+        }
         return monsters.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
-        cell.textLabel!.text! = monsters[indexPath.row].name!
-        cell.detailTextLabel!.text! = String(monsters[indexPath.row].id!)
+        
+        if (isSearching) {
+            cell.textLabel!.text! = filteredMonsters[indexPath.row].name!
+            cell.detailTextLabel!.text! = String(filteredMonsters[indexPath.row].id!)
+        }
+            
+        else {
+            cell.textLabel!.text! = monsters[indexPath.row].name!
+            cell.detailTextLabel!.text! = String(monsters[indexPath.row].id!)
+        }
+
         return cell
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchBar.text == nil || searchBar.text == "") {
+            isSearching = false
+            view.endEditing(true)
+            monstertable.reloadData()
+        }
+        
+        else {
+            isSearching = true
+            filteredMonsters = monsters.filter({$0.name!.contains(searchBar.text!)})
+            monstertable.reloadData()
+        }
     }
 
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
         if (segue.identifier == "monsterviewsegue") {
             if let monsterView = segue.destination as? MonsterView {
                 // Get the current table entry's index
                 let index = self.tableView.indexPathForSelectedRow?.row
-                // Get the object associated with that cell and pass it to the next VC
-                
-                let monster = monsters[index!]
-                
+                var monster:Monster
+                if (isSearching) {
+                    monster = filteredMonsters[index!]
+                }
+                else {
+                    monster = monsters[index!]
+                }
                 monsterView.monsterName = monster.name!
                 monsterView.maxhp = monster.hp_max!
                 monsterView.maxatk = monster.atk_max!
@@ -128,5 +167,4 @@ class MonsterDatabaseTableViewController: UITableViewController {
             }
         }
     }
-
 }

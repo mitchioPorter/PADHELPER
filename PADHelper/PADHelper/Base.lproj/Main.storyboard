@@ -59,7 +59,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="594-Fa-3cv"/>
                     <connections>
-                        <outlet property="monstersearch" destination="hLf-lG-orD" id="13a-Ke-Wg2"/>
+                        <outlet property="monstersearch" destination="hLf-lG-orD" id="TpE-hz-RJ1"/>
                         <outlet property="monstertable" destination="y22-vi-saN" id="eoe-k4-GYh"/>
                     </connections>
                 </tableViewController>
