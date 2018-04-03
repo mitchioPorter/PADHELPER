@@ -53,6 +53,15 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     // url for PadHerder leader skill api
     let leader_skill_api_url:String = "https://www.padherder.com/api/leader_skills/"
     
+    // url for PadHerder active skill api
+    let active_skill_api_url:String = "https://www.padherder.com/api/active_skills/"
+    
+    // url for PadHerder awakening api
+    let awakening_api_url:String = "https://www.padherder.com/api/awakenings/"
+    
+    // PadHerder url for getting images
+    let base_url:String = "https://www.padherder.com/"
+    
     
     // array of Monster objects pulled from the API
     var monsters:[Monster] = []
