@@ -27,6 +27,7 @@ class MonsterView: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Monster View"
 
         // Do any additional setup after loading the view.
         name.text! = self.monsterName!

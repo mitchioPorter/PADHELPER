@@ -66,6 +66,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
         monstersearch.delegate = self
         monstersearch.returnKeyType = UIReturnKeyType.done
+        self.title = "Monster Database"
         
         fillMonsterData()
     }
@@ -116,6 +117,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
+        
         
         if (isSearching) {
             cell.textLabel!.text! = filteredMonsters[indexPath.row].name!
