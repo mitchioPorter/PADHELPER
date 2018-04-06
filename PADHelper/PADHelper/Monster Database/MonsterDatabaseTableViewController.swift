@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -21,14 +22,11 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         var active_skill:String?
         var atk_max:Int?
         var atk_min:Int?
-        var atk_scale:Double?
         var awoken_skills:[Int]?
         var element:Int?
         var element2:Int?
-        var feed_xp:Double?
         var hp_max:Int?
         var hp_min:Int?
-        var hp_scale:Double?
         var id:Int?
         var jp_only:Bool?
         var leader_skill:String?
@@ -37,14 +35,26 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         var rarity:Int?
         var rcv_max:Int?
         var rcv_min:Int?
-        var rcv_scale:Double?
         var team_cost:Int?
         var type:Int?
         var type2:Int?
         var type3:Int?
-        var xp_curve:Int?
         var image40_href:String?
         var image60_href:String?
+    }
+    
+    struct Active_Skill: Decodable {
+        var min_cooldown:Int?
+        var max_cooldwown:Int?
+        var name:String?
+        var effect:String?
+    }
+    
+    
+    struct Leader_Skill: Decodable {
+        var data:[Int]?
+        var name:String?
+        var effect:String?
     }
  
     // url for PadHerder monster api
@@ -53,16 +63,39 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     // url for PadHerder leader skill api
     let leader_skill_api_url:String = "https://www.padherder.com/api/leader_skills/"
     
+    // url for PadHerder active skill api
+    let active_skill_api_url:String = "https://www.padherder.com/api/active_skills/"
+    
+    // url for PadHerder awakening api
+    let awakening_api_url:String = "https://www.padherder.com/api/awakenings/"
+    
+    // PadHerder url for getting images
+    let base_url:String = "https://www.padherder.com/"
+    
+    
+    // ARRAYS FOR API DATA
     
     // array of Monster objects pulled from the API
-    var monsters:[Monster] = []
+    var api_monster_list:[Monster] = []
+    
+    // array of leader skills pulled from the API
+    var api_leader_skill_list:[Leader_Skill] = []
+    
+    // array of active skills pulled from the API
+    var api_active_skill_list:[Active_Skill] = []
+    
+    
+    
+    
+    
+    // DATABASE SEARCHING VARS
     
     // array of filtered monsters for the search bar
     var filteredMonsters:[Monster] = []
     
     // a bool to tell when searching
     var isSearching = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,6 +104,24 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         self.title = "Monster Database"
         
         fillMonsterData()
+        fillActiveSkillData()
+        fillLeaderSkillData()
+    }
+    
+    // function to delete all records from Core Data
+    private func deleteAllRecords() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Monster")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
     }
     
     private func fillMonsterData() {
@@ -90,7 +141,59 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 
                 // Get back to the main queue
                 DispatchQueue.main.async {
-                    self.monsters = monsterData
+                    self.api_monster_list = monsterData
+                    self.monstertable.reloadData()
+                }
+            } catch let jsonError {
+                print(jsonError)
+            }
+            }.resume()
+    }
+    
+    private func fillActiveSkillData() {
+        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
+        // load the url
+        guard let url = URL(string: active_skill_api_url) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            guard let data = data else { return }
+            // Implement JSON decoding and parsing
+            do {
+                // Decode retrived data with JSONDecoder and assing type of Article object
+                let monsterData = try JSONDecoder().decode([Active_Skill].self, from: data)
+                
+                // Get back to the main queue
+                DispatchQueue.main.async {
+                    self.api_active_skill_list = monsterData
+                    self.monstertable.reloadData()
+                }
+            } catch let jsonError {
+                print(jsonError)
+            }
+            }.resume()
+    }
+    
+    private func fillLeaderSkillData() {
+        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
+        // load the url
+        guard let url = URL(string: leader_skill_api_url) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            guard let data = data else { return }
+            // Implement JSON decoding and parsing
+            do {
+                // Decode retrived data with JSONDecoder and assing type of Article object
+                let monsterData = try JSONDecoder().decode([Leader_Skill].self, from: data)
+                
+                // Get back to the main queue
+                DispatchQueue.main.async {
+                    self.api_leader_skill_list = monsterData
                     self.monstertable.reloadData()
                 }
             } catch let jsonError {
@@ -114,7 +217,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         if (isSearching) {
             return filteredMonsters.count
         }
-        return monsters.count
+        return api_monster_list.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -127,8 +230,8 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         }
             
         else {
-            cell.textLabel!.text! = monsters[indexPath.row].name!
-            cell.detailTextLabel!.text! = String(monsters[indexPath.row].id!)
+            cell.textLabel!.text! = api_monster_list[indexPath.row].name!
+            cell.detailTextLabel!.text! = String(api_monster_list[indexPath.row].id!)
         }
 
         return cell
@@ -143,7 +246,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
         else {
             isSearching = true
-            filteredMonsters = monsters.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
+            filteredMonsters = api_monster_list.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
             monstertable.reloadData()
             }
     }
@@ -160,7 +263,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                     monster = filteredMonsters[index!]
                 }
                 else {
-                    monster = monsters[index!]
+                    monster = api_monster_list[index!]
                 }
                 monsterView.monsterName = monster.name!
                 monsterView.maxhp = monster.hp_max!
