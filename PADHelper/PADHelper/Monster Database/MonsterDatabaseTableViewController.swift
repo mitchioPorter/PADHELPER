@@ -42,6 +42,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         var image40_href:String?
         var image60_href:String?
     }
+
     
     struct Active_Skill: Decodable {
         var min_cooldown:Int?
@@ -216,6 +217,20 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             }
             }.resume()
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchBar.text == nil || searchBar.text == "") {
+            isSearching = false
+            view.endEditing(true)
+            monstertable.reloadData()
+        }
+            
+        else {
+            isSearching = true
+            filteredMonsters = api_monster_list.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
+            monstertable.reloadData()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -250,20 +265,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         }
 
         return cell
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if (searchBar.text == nil || searchBar.text == "") {
-            isSearching = false
-            view.endEditing(true)
-            monstertable.reloadData()
-        }
-        
-        else {
-            isSearching = true
-            filteredMonsters = api_monster_list.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
-            monstertable.reloadData()
-            }
     }
 
     // MARK: - Navigation
