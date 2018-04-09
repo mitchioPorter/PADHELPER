@@ -110,8 +110,8 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         self.tableView.addSubview(refreshControl!) // not required when using UITableViewController
         
         fillMonsterData()
-        fillActiveSkillData()
-        fillLeaderSkillData()
+//        fillActiveSkillData()
+//        fillLeaderSkillData()
 
     }
     
