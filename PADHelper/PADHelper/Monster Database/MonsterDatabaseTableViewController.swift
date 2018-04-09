@@ -96,16 +96,31 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     // a bool to tell when searching
     var isSearching = false
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         monstersearch.delegate = self
         monstersearch.returnKeyType = UIReturnKeyType.done
         self.title = "Monster Database"
+
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(refreshControl!) // not required when using UITableViewController
         
         fillMonsterData()
         fillActiveSkillData()
         fillLeaderSkillData()
+
+    }
+    
+    @objc func refresh() {
+        // Code to refresh table view
+        api_monster_list = []
+        fillMonsterData()
+        refreshControl?.endRefreshing()
+        self.monstertable.reloadData()
     }
     
     // function to delete all records from Core Data
