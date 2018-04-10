@@ -23,6 +23,7 @@ class MonsterView: UIViewController {
     var maxrcv:Int?
     var activeskill:String?
     var leaderskill:String?
+    var m_id:Int?
     
         
     override func viewDidLoad() {
@@ -43,14 +44,18 @@ class MonsterView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "addtoteamsegue") {
+            let addVC = segue.destination as! AddToTeamViewController
+            addVC.m_id = self.m_id!
+            addVC.name = self.monsterName!
+        }
     }
-    */
-
 }

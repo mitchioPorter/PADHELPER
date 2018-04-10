@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */; };
+		788C167C207D571700E9183F /* AddToTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167B207D571700E9183F /* AddToTeamViewController.swift */; };
 		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
 		7896676920719CBD00226C21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7896676820719CBD00226C21 /* AppDelegate.swift */; };
 		7896676E20719CBD00226C21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896676C20719CBD00226C21 /* Main.storyboard */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListTableViewController.swift; sourceTree = "<group>"; };
+		788C167B207D571700E9183F /* AddToTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToTeamViewController.swift; sourceTree = "<group>"; };
 		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
 		7896676520719CBD00226C21 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7896676820719CBD00226C21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +76,9 @@
 			children = (
 				7891E26B2072D81D00321E7B /* Monster Database */,
 				7896676820719CBD00226C21 /* AppDelegate.swift */,
+				788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */,
 				7896676C20719CBD00226C21 /* Main.storyboard */,
+				788C167B207D571700E9183F /* AddToTeamViewController.swift */,
 				7896677220719CBD00226C21 /* Assets.xcassets */,
 				7896677420719CBD00226C21 /* LaunchScreen.storyboard */,
 				7896677720719CBD00226C21 /* Info.plist */,
@@ -155,9 +161,11 @@
 			files = (
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
+				788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */,
 				7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */,
 				7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */,
 				7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */,
+				788C167C207D571700E9183F /* AddToTeamViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

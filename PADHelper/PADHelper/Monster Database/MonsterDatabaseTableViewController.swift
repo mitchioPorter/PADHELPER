@@ -286,6 +286,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 monsterView.maxatk = monster.atk_max!
                 monsterView.maxrcv = monster.rcv_max!
                 monsterView.activeskill = monster.active_skill!
+                monsterView.m_id = monster.id!
                 
                 // some monsters, such as assist evos, do not have a leader skill
                 if monster.leader_skill != nil {
