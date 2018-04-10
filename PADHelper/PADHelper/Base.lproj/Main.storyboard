@@ -286,7 +286,7 @@
                                 </constraints>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <segue destination="f0b-pj-0jt" kind="show" identifier="postloginsegue" id="XOB-v3-a76"/>
+                                    <segue destination="f0b-pj-0jt" kind="showDetail" identifier="postloginsegue" action="showViewController:sender:" id="XOB-v3-a76"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Tx-X3-3KX">
