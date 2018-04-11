@@ -17,17 +17,21 @@ class TeamListTableViewController: UITableViewController {
     
     var teams: [NSManagedObject] = []
     
+    var base_img_url = "https://www.padherder.com"
+
+    
     // INFO ABOUT TEAM ENTITY:
     // Just holds the monster ID number to pull from monster array
     // The attribute monster1 is used for both own and friend leaders
 
-    @IBAction func add_new_team(_ sender: Any) {
-        addNewTeam()
-        self.teamlistview.reloadData()
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        deleteAllRecords()
+
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -60,6 +64,15 @@ class TeamListTableViewController: UITableViewController {
         } catch let err as NSError {
             print ("Failed to retrieve teams", err)
         }
+        
+        
+        if (teams.count == 0) {
+            print ("There are no teams")
+        }
+        else {
+            print ("There are \(teams.count) teams")
+        }
+        
     }
 
     func addNewTeam() {
@@ -72,6 +85,24 @@ class TeamListTableViewController: UITableViewController {
         item.setValue(0, forKey: "monster3")
         item.setValue(0, forKey: "monster4")
         item.setValue(0, forKey: "monster5")
+        do {
+            try managedContext.save()
+        } catch let err as NSError {
+            print("Failed to save Team.", err)
+        }
+    }
+    
+    
+    func addDefaultTeam() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
+        let item = NSManagedObject(entity: entity, insertInto: managedContext)
+        item.setValue(1, forKey: "monster1")
+        item.setValue(4, forKey: "monster2")
+        item.setValue(7, forKey: "monster3")
+        item.setValue(10, forKey: "monster4")
+        item.setValue(13, forKey: "monster5")
         do {
             try managedContext.save()
         } catch let err as NSError {
@@ -96,15 +127,26 @@ class TeamListTableViewController: UITableViewController {
         return teams.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "teamcell", for: indexPath) as! TeamCell
+        
+        if (teams.count != 0) {
+            var monsters = (self.tabBarController?.viewControllers?.first as! MonsterDatabaseTableViewController).api_monster_list
+            
+            let team = teams[indexPath.row] as! Team
+            let id = Int(team.monster1)
+            
+            print (monsters.count)
+            
+            let m_1 = monsters[id]
+            
+            let img_url = base_img_url + m_1.image40_href!
+            cell.m1.setImageFromURl(stringImageUrl: img_url)
+        }
 
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -150,5 +192,10 @@ class TeamListTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func add_new_team(_ sender: Any) {
+        addDefaultTeam()
+    }
+    
 
 }

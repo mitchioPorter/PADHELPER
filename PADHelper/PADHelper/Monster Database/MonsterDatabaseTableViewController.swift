@@ -10,38 +10,41 @@ import UIKit
 import Foundation
 import CoreData
 
+
+// Struct to represent each monster found in the PADHerder api
+// uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
+struct Monster: Decodable {
+    var active_skill:String?
+    var atk_max:Int?
+    var atk_min:Int?
+    var awoken_skills:[Int]?
+    var element:Int?
+    var element2:Int?
+    var hp_max:Int?
+    var hp_min:Int?
+    var id:Int?
+    var jp_only:Bool?
+    var leader_skill:String?
+    var max_level:Int?
+    var name:String?
+    var rarity:Int?
+    var rcv_max:Int?
+    var rcv_min:Int?
+    var team_cost:Int?
+    var type:Int?
+    var type2:Int?
+    var type3:Int?
+    var image40_href:String?
+    var image60_href:String?
+}
+
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var monstertable: UITableView!
     
     @IBOutlet weak var monstersearch: UISearchBar!
     
-    // Struct to represent each monster found in the PADHerder api
-    // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
-    struct Monster: Decodable {
-        var active_skill:String?
-        var atk_max:Int?
-        var atk_min:Int?
-        var awoken_skills:[Int]?
-        var element:Int?
-        var element2:Int?
-        var hp_max:Int?
-        var hp_min:Int?
-        var id:Int?
-        var jp_only:Bool?
-        var leader_skill:String?
-        var max_level:Int?
-        var name:String?
-        var rarity:Int?
-        var rcv_max:Int?
-        var rcv_min:Int?
-        var team_cost:Int?
-        var type:Int?
-        var type2:Int?
-        var type3:Int?
-        var image40_href:String?
-        var image60_href:String?
-    }
+
 
     
     struct Active_Skill: Decodable {
@@ -86,6 +89,9 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     var api_active_skill_list:[Active_Skill] = []
     
     
+    // list of monsters converted to monster objects
+    var final_monster_list:[Monster] = []
+    
     
     
     
@@ -111,6 +117,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         self.tableView.addSubview(refreshControl!) // not required when using UITableViewController
         
         fillMonsterData()
+        
 //        fillActiveSkillData()
 //        fillLeaderSkillData()
 
@@ -123,6 +130,20 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         refreshControl?.endRefreshing()
         self.monstertable.reloadData()
     }
+    
+//
+//    private func makeMonsterObj() {
+//
+//        for mnstr in api_monster_list {
+//
+//            var monster = Monster
+//
+//
+//        }
+//
+//
+//
+//    }
     
     // function to delete all records from Core Data
     private func deleteAllRecords() {
@@ -227,7 +248,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             
         else {
             isSearching = true
-            filteredMonsters = api_monster_list.filter({$0.name!.contains(searchBar.text!) || $0.id! == Int(searchBar.text!)})
+            filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchBar.text!.lowercased()) || $0.id! == Int(searchBar.text!)})
             monstertable.reloadData()
         }
     }
@@ -287,6 +308,11 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 monsterView.maxrcv = monster.rcv_max!
                 monsterView.activeskill = monster.active_skill!
                 monsterView.m_id = monster.id!
+                monsterView.img_40 = monster.image40_href
+                
+                if (monster.image60_href != nil) {
+                    monsterView.img_60 = monster.image60_href!
+                }
                 
                 // some monsters, such as assist evos, do not have a leader skill
                 if monster.leader_skill != nil {

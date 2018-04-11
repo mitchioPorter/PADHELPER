@@ -169,10 +169,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v3L-Lu-h2T">
-                                <rect key="frame" x="67" y="170" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oHa-Ic-Ftm">
                                 <rect key="frame" x="243" y="90" width="87" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -196,6 +192,10 @@
                                     <segue destination="wqp-YD-baY" kind="show" identifier="addtoteamsegue" id="tzg-91-psd"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v3L-Lu-h2T">
+                                <rect key="frame" x="127" y="195" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="jYN-6K-rH2"/>
@@ -206,6 +206,7 @@
                         <outlet property="max_atk" destination="9aD-8l-RDw" id="j4d-0h-vsb"/>
                         <outlet property="max_hp" destination="b44-wj-uwF" id="AxE-J9-Z3N"/>
                         <outlet property="max_rcv" destination="eUm-vA-SZb" id="N1q-VC-rGs"/>
+                        <outlet property="monster_img" destination="v3L-Lu-h2T" id="uLm-T3-Jpd"/>
                         <outlet property="name" destination="hKG-oA-lqf" id="poK-kY-Jeu"/>
                     </connections>
                 </viewController>
@@ -578,15 +579,15 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Add Team"/>
                             <connections>
-                                <action selector="add_new_team:" destination="BL8-dj-7ZP" eventType="touchUpInside" id="6jB-Hn-dHN"/>
+                                <action selector="add_new_team:" destination="BL8-dj-7ZP" eventType="touchUpInside" id="A39-9u-hgK"/>
                             </connections>
                         </button>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TeamCell" rowHeight="90" id="Nhh-ZH-6Mp">
-                                <rect key="frame" x="0.0" y="72" width="375" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamcell" rowHeight="151" id="Nhh-ZH-6Mp" customClass="TeamCell" customModule="PADHelper" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="151"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nhh-ZH-6Mp" id="bBL-UM-nt1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Team #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMt-DJ-ueC">
@@ -630,6 +631,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="m1" destination="foc-Rv-ygp" id="B1m-bo-Md8"/>
                                     <segue destination="M4u-8N-hRD" kind="show" id="ESp-vk-1un"/>
                                 </connections>
                             </tableViewCell>
@@ -643,13 +645,12 @@
                         <color key="badgeColor" red="0.34512265609999998" green="1" blue="0.34787900300000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="add_team_button" destination="Iln-oT-Qf7" id="OFo-k0-HIe"/>
                         <outlet property="teamlistview" destination="tVO-N3-FbC" id="lIv-HO-Za3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Ww-8A-qSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-726" y="601"/>
+            <point key="canvasLocation" x="-727.20000000000005" y="600.44977511244383"/>
         </scene>
         <!--Single Team View-->
         <scene sceneID="jXo-OK-aFU">
@@ -784,7 +785,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Geb-FX-IUa"/>
+        <segue reference="gby-fc-MsT"/>
         <segue reference="veP-6h-2R4"/>
         <segue reference="uVM-Eu-Hwd"/>
     </inferredMetricsTieBreakers>

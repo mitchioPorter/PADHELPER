@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */; };
 		788C167C207D571700E9183F /* AddToTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167B207D571700E9183F /* AddToTeamViewController.swift */; };
+		788C167E207D70B900E9183F /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167D207D70B900E9183F /* TeamCell.swift */; };
 		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
 		7896676920719CBD00226C21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7896676820719CBD00226C21 /* AppDelegate.swift */; };
 		7896676E20719CBD00226C21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896676C20719CBD00226C21 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListTableViewController.swift; sourceTree = "<group>"; };
 		788C167B207D571700E9183F /* AddToTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToTeamViewController.swift; sourceTree = "<group>"; };
+		788C167D207D70B900E9183F /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
 		7896676520719CBD00226C21 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7896676820719CBD00226C21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		788C1681207D83C500E9183F /* Team List */ = {
+			isa = PBXGroup;
+			children = (
+				788C167B207D571700E9183F /* AddToTeamViewController.swift */,
+				788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */,
+				788C167D207D70B900E9183F /* TeamCell.swift */,
+			);
+			path = "Team List";
+			sourceTree = "<group>";
+		};
 		7891E26B2072D81D00321E7B /* Monster Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -74,15 +86,14 @@
 		7896676720719CBD00226C21 /* PADHelper */ = {
 			isa = PBXGroup;
 			children = (
-				7891E26B2072D81D00321E7B /* Monster Database */,
 				7896676820719CBD00226C21 /* AppDelegate.swift */,
-				788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */,
 				7896676C20719CBD00226C21 /* Main.storyboard */,
-				788C167B207D571700E9183F /* AddToTeamViewController.swift */,
 				7896677220719CBD00226C21 /* Assets.xcassets */,
 				7896677420719CBD00226C21 /* LaunchScreen.storyboard */,
 				7896677720719CBD00226C21 /* Info.plist */,
 				7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */,
+				788C1681207D83C500E9183F /* Team List */,
+				7891E26B2072D81D00321E7B /* Monster Database */,
 			);
 			path = PADHelper;
 			sourceTree = "<group>";
@@ -159,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788C167E207D70B900E9183F /* TeamCell.swift in Sources */,
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
 				788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */,
