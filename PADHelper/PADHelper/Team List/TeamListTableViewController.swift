@@ -30,8 +30,10 @@ class TeamListTableViewController: UITableViewController {
         super.viewDidLoad()
         
 //        deleteAllRecords()
-
         
+
+        self.teamlistview.rowHeight = 100
+        self.teamlistview.reloadData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -64,6 +66,7 @@ class TeamListTableViewController: UITableViewController {
         } catch let err as NSError {
             print ("Failed to retrieve teams", err)
         }
+        
         
         
         if (teams.count == 0) {
@@ -99,10 +102,10 @@ class TeamListTableViewController: UITableViewController {
         let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
         let item = NSManagedObject(entity: entity, insertInto: managedContext)
         item.setValue(1, forKey: "monster1")
-        item.setValue(4, forKey: "monster2")
-        item.setValue(7, forKey: "monster3")
-        item.setValue(10, forKey: "monster4")
-        item.setValue(13, forKey: "monster5")
+        item.setValue(5, forKey: "monster2")
+        item.setValue(8, forKey: "monster3")
+        item.setValue(11, forKey: "monster4")
+        item.setValue(14, forKey: "monster5")
         do {
             try managedContext.save()
         } catch let err as NSError {
@@ -135,14 +138,38 @@ class TeamListTableViewController: UITableViewController {
             
             let team = teams[indexPath.row] as! Team
             let id = Int(team.monster1)
-            
-            print (monsters.count)
-            
             let m_1 = monsters[id]
+            
+            let id2 = Int(team.monster2)
+            let m_2 = monsters[id2]
+
+            let id3 = Int(team.monster3)
+            let m_3 = monsters[id3]
+
+            let id4 = Int(team.monster4)
+            let m_4 = monsters[id4]
+
+            let id5 = Int(team.monster5)
+            let m_5 = monsters[id5]
+
+            let m_6 = monsters[id]
+            
+            
             
             let img_url = base_img_url + m_1.image40_href!
             cell.m1.setImageFromURl(stringImageUrl: img_url)
+            let img_url2 = base_img_url + m_2.image40_href!
+            cell.m2.setImageFromURl(stringImageUrl: img_url2)
+            let img_url3 = base_img_url + m_3.image40_href!
+            cell.m3.setImageFromURl(stringImageUrl: img_url3)
+            let img_url4 = base_img_url + m_4.image40_href!
+            cell.m4.setImageFromURl(stringImageUrl: img_url4)
+            let img_url5 = base_img_url + m_5.image40_href!
+            cell.m5.setImageFromURl(stringImageUrl: img_url5)
+            let img_url6 = base_img_url + m_6.image40_href!
+            cell.m6.setImageFromURl(stringImageUrl: img_url6)
         }
+        
 
         return cell
     }
@@ -195,6 +222,7 @@ class TeamListTableViewController: UITableViewController {
     
     @IBAction func add_new_team(_ sender: Any) {
         addDefaultTeam()
+        self.teamlistview.reloadData()
     }
     
 

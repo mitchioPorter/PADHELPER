@@ -38,28 +38,26 @@ struct Monster: Decodable {
     var image60_href:String?
 }
 
+struct Active_Skill: Decodable {
+    var min_cooldown:Int?
+    var max_cooldwown:Int?
+    var name:String?
+    var effect:String?
+}
+
+
+struct Leader_Skill: Decodable {
+    var data:[Int]?
+    var name:String?
+    var effect:String?
+}
+
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var monstertable: UITableView!
     
     @IBOutlet weak var monstersearch: UISearchBar!
     
-
-
-    
-    struct Active_Skill: Decodable {
-        var min_cooldown:Int?
-        var max_cooldwown:Int?
-        var name:String?
-        var effect:String?
-    }
-    
-    
-    struct Leader_Skill: Decodable {
-        var data:[Int]?
-        var name:String?
-        var effect:String?
-    }
  
     // url for PadHerder monster api
     let monster_api_url:String = "https://www.padherder.com/api/monsters/"
@@ -91,7 +89,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     // list of monsters converted to monster objects
     var final_monster_list:[Monster] = []
-    
     
     
     

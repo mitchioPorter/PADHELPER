@@ -11,6 +11,12 @@ import UIKit
 class TeamCell: UITableViewCell {
 
     @IBOutlet weak var m1: UIImageView!
+    @IBOutlet weak var m2: UIImageView!
+    @IBOutlet weak var m3: UIImageView!
+    @IBOutlet weak var m4: UIImageView!
+    @IBOutlet weak var m5: UIImageView!
+    @IBOutlet weak var m6: UIImageView!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
