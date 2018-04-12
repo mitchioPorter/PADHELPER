@@ -41,8 +41,6 @@ class AddToTeamViewController: UIViewController {
         let item = NSManagedObject(entity: entity, insertInto: managedContext)
 //        item.setValue(firstName.text, forKey: "firstName")
 //        item.setValue(lastName.text, forKey: "lastName")
-        
-        
         do {
             try managedContext.save()
         } catch let err as NSError {
