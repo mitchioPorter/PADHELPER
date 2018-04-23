@@ -11,20 +11,21 @@ import CoreData
 
 class AddToTeamViewController: UIViewController {
 
-    @IBOutlet weak var teamnumber: UITextField!
-    @IBOutlet weak var slotnumber: UITextField!
-    @IBOutlet weak var monster_label: UILabel!
-    
-    var teams: [NSManagedObject] = []
 
-    
-    var m_id:Int?
-    var name:String?
-    
+    @IBOutlet weak var m1: UITextField!
+    @IBOutlet weak var m2: UITextField!
+    @IBOutlet weak var m3: UITextField!
+    @IBOutlet weak var m4: UITextField!
+    @IBOutlet weak var m5: UITextField!
+    @IBOutlet weak var m6: UITextField!
+
+
+    @IBAction func saveTeam(_ sender: Any) {
+        addCandidate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.monster_label.text = self.name! + ",  # " + String(self.m_id!)
 
         // Do any additional setup after loading the view.
     }
@@ -39,25 +40,20 @@ class AddToTeamViewController: UIViewController {
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
         let item = NSManagedObject(entity: entity, insertInto: managedContext)
-//        item.setValue(firstName.text, forKey: "firstName")
-//        item.setValue(lastName.text, forKey: "lastName")
+        item.setValue(Int(m1.text!), forKey: "monster1")
+        item.setValue(Int(m2.text!), forKey: "monster2")
+        item.setValue(Int(m3.text!), forKey: "monster3")
+        item.setValue(Int(m4.text!), forKey: "monster4")
+        item.setValue(Int(m5.text!), forKey: "monster5")
+        item.setValue(Int(m6.text!), forKey: "monster6")
+
         do {
             try managedContext.save()
         } catch let err as NSError {
             print("Failed to save candidate.", err)
         }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Team")
-        do {
-            teams = try managedContext.fetch(fetchRequest)
-        } catch let err as NSError {
-            print ("Failed to retrieve teams", err)
-        }
+        
+        super.tabBarController?.viewControllers![1].viewWillAppear(true)
     }
     
 

@@ -29,7 +29,8 @@ class TeamListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        deleteAllRecords()
+        deleteAllRecords()
+//        addDefaultTeam()
         
 
         self.teamlistview.rowHeight = 100
@@ -55,6 +56,7 @@ class TeamListTableViewController: UITableViewController {
         } catch {
             print ("There was an error")
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +77,8 @@ class TeamListTableViewController: UITableViewController {
         else {
             print ("There are \(teams.count) teams")
         }
+        
+        teamlistview.reloadData()
         
     }
 
@@ -106,11 +110,16 @@ class TeamListTableViewController: UITableViewController {
         item.setValue(8, forKey: "monster3")
         item.setValue(11, forKey: "monster4")
         item.setValue(14, forKey: "monster5")
+        item.setValue(1, forKey: "monster6")
+        item.setValue("Default Team", forKey: "name")
+
+        
         do {
             try managedContext.save()
         } catch let err as NSError {
             print("Failed to save Team.", err)
         }
+        teamlistview.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -134,7 +143,7 @@ class TeamListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teamcell", for: indexPath) as! TeamCell
         
         if (teams.count != 0) {
-            var monsters = (self.tabBarController?.viewControllers?.first as! MonsterDatabaseTableViewController).api_monster_list
+            var monsters = api_monster_list
             
             let team = teams[indexPath.row] as! Team
             let id = Int(team.monster1)
@@ -220,10 +229,10 @@ class TeamListTableViewController: UITableViewController {
     }
     */
     
-    @IBAction func add_new_team(_ sender: Any) {
-        addDefaultTeam()
-        self.teamlistview.reloadData()
-    }
+//    @IBAction func add_new_team(_ sender: Any) {
+//        addDefaultTeam()
+//        self.teamlistview.reloadData()
+//    }
     
 
 }

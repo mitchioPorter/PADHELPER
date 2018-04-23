@@ -52,6 +52,10 @@ struct Leader_Skill: Decodable {
     var effect:String?
 }
 
+
+// array of Monster objects pulled from the API
+var api_monster_list:[Monster] = []
+
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var monstertable: UITableView!
@@ -76,9 +80,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     
     // ARRAYS FOR API DATA
-    
-    // array of Monster objects pulled from the API
-    var api_monster_list:[Monster] = []
+
     
     // array of leader skills pulled from the API
     var api_leader_skill_list:[Leader_Skill] = []
@@ -175,7 +177,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 
                 // Get back to the main queue
                 DispatchQueue.main.async {
-                    self.api_monster_list = monsterData
+                    api_monster_list = monsterData
                     self.monstertable.reloadData()
                 }
             } catch let jsonError {
