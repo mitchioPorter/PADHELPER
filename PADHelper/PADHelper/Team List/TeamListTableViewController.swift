@@ -12,32 +12,20 @@ import CoreData
 class TeamListTableViewController: UITableViewController {
     
     @IBOutlet var teamlistview: UITableView!
+    
     // An array of Teams
     // Each entry is a team object with attributes for the id's of the monsters on the team
-    
     var teams: [NSManagedObject] = []
     
     var base_img_url = "https://www.padherder.com"
-
-    
-    // INFO ABOUT TEAM ENTITY:
-    // Just holds the monster ID number to pull from monster array
-    // The attribute monster1 is used for both own and friend leaders
-
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        deleteAllRecords()
-//        addDefaultTeam()
-        
+//        deleteAllRecords()
 
         self.teamlistview.rowHeight = 100
         self.teamlistview.reloadData()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -69,57 +57,8 @@ class TeamListTableViewController: UITableViewController {
             print ("Failed to retrieve teams", err)
         }
         
-        
-        
-        if (teams.count == 0) {
-            print ("There are no teams")
-        }
-        else {
-            print ("There are \(teams.count) teams")
-        }
-        
         teamlistview.reloadData()
         
-    }
-
-    func addNewTeam() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
-        let item = NSManagedObject(entity: entity, insertInto: managedContext)
-        item.setValue(0, forKey: "monster1")
-        item.setValue(0, forKey: "monster2")
-        item.setValue(0, forKey: "monster3")
-        item.setValue(0, forKey: "monster4")
-        item.setValue(0, forKey: "monster5")
-        do {
-            try managedContext.save()
-        } catch let err as NSError {
-            print("Failed to save Team.", err)
-        }
-    }
-    
-    
-    func addDefaultTeam() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
-        let item = NSManagedObject(entity: entity, insertInto: managedContext)
-        item.setValue(1, forKey: "monster1")
-        item.setValue(5, forKey: "monster2")
-        item.setValue(8, forKey: "monster3")
-        item.setValue(11, forKey: "monster4")
-        item.setValue(14, forKey: "monster5")
-        item.setValue(1, forKey: "monster6")
-        item.setValue("Default Team", forKey: "name")
-
-        
-        do {
-            try managedContext.save()
-        } catch let err as NSError {
-            print("Failed to save Team.", err)
-        }
-        teamlistview.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -143,26 +82,24 @@ class TeamListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teamcell", for: indexPath) as! TeamCell
         
         if (teams.count != 0) {
-            var monsters = api_monster_list
-            
+
             let team = teams[indexPath.row] as! Team
             let id = Int(team.monster1)
-            let m_1 = monsters[id]
-            
             let id2 = Int(team.monster2)
-            let m_2 = monsters[id2]
-
             let id3 = Int(team.monster3)
-            let m_3 = monsters[id3]
-
             let id4 = Int(team.monster4)
-            let m_4 = monsters[id4]
-
             let id5 = Int(team.monster5)
-            let m_5 = monsters[id5]
+            let id6 = Int(team.monster6)
 
-            let m_6 = monsters[id]
             
+            let monsters = api_monster_list.filter({$0.id! == id || $0.id! == id2 || $0.id! == id3 || $0.id! == id4 || $0.id! == id5 || $0.id! == id6})
+            let m_1 = monsters.filter({$0.id! == id})[0]
+            let m_2 = monsters.filter({$0.id! == id2})[0]
+            let m_3 = monsters.filter({$0.id! == id3})[0]
+            let m_4 = monsters.filter({$0.id! == id4})[0]
+            let m_5 = monsters.filter({$0.id! == id5})[0]
+            let m_6 = monsters.filter({$0.id! == id6})[0]
+
             
             
             let img_url = base_img_url + m_1.image40_href!
@@ -219,20 +156,20 @@ class TeamListTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "teamviewsegue" {
+            if let teamView = segue.destination as? IndividualTeamTableTableViewController {
+                // Get the current table entry's index
+                let index = self.tableView.indexPathForSelectedRow?.row
+                let team = teams[index!] as! Team
+                teamView.team = team
+            }
+        }
     }
-    */
-    
-//    @IBAction func add_new_team(_ sender: Any) {
-//        addDefaultTeam()
-//        self.teamlistview.reloadData()
-//    }
-    
-
 }

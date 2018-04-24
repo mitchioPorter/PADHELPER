@@ -18,6 +18,7 @@
 		7896677620719CBD00226C21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896677420719CBD00226C21 /* LaunchScreen.storyboard */; };
 		7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */; };
 		789667952072D15100226C21 /* MonsterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789667942072D15100226C21 /* MonsterCell.swift */; };
+		78BC5FDB208E988F008FF96F /* IndividualTeamTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		7896677720719CBD00226C21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseTableViewController.swift; sourceTree = "<group>"; };
 		789667942072D15100226C21 /* MonsterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCell.swift; sourceTree = "<group>"; };
+		78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualTeamTableTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 				788C167B207D571700E9183F /* AddToTeamViewController.swift */,
 				788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */,
 				788C167D207D70B900E9183F /* TeamCell.swift */,
+				78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */,
 			);
 			path = "Team List";
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
 				788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */,
 				7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */,
+				78BC5FDB208E988F008FF96F /* IndividualTeamTableTableViewController.swift in Sources */,
 				7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */,
 				7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */,
 				788C167C207D571700E9183F /* AddToTeamViewController.swift in Sources */,

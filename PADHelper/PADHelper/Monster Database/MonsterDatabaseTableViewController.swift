@@ -13,7 +13,7 @@ import CoreData
 
 // Struct to represent each monster found in the PADHerder api
 // uses optional values since some of the values may be null, i.e. leader skill, types, active skills, etc
-struct Monster: Decodable {
+struct Monster: Codable {
     var active_skill:String?
     var atk_max:Int?
     var atk_min:Int?
@@ -55,6 +55,14 @@ struct Leader_Skill: Decodable {
 
 // array of Monster objects pulled from the API
 var api_monster_list:[Monster] = []
+
+// array of uiimages to cache the monster images
+
+var img40:[UIImage] = []
+
+var img60:[UIImage] = []
+
+
 
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -121,28 +129,90 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
 //        fillLeaderSkillData()
 
     }
-    
-    @objc func refresh() {
-        // Code to refresh table view
-        api_monster_list = []
-        fillMonsterData()
-        refreshControl?.endRefreshing()
-        self.monstertable.reloadData()
+
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: - Table view data source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (isSearching) {
+            return filteredMonsters.count
+        }
+        return api_monster_list.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
+        
+        
+        if (isSearching) {
+            cell.textLabel!.text! = filteredMonsters[indexPath.row].name!
+            cell.detailTextLabel!.text! = String(filteredMonsters[indexPath.row].id!)
+        }
+            
+        else {
+            cell.textLabel!.text! = api_monster_list[indexPath.row].name!
+            cell.detailTextLabel!.text! = String(api_monster_list[indexPath.row].id!)
+        }
+
+        return cell
+    }
+
+    // MARK: - Navigation
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "monsterviewsegue") {
+            if let monsterView = segue.destination as? MonsterView {
+                // Get the current table entry's index
+                let index = self.tableView.indexPathForSelectedRow?.row
+                var monster:Monster
+                if (isSearching) {
+                    monster = filteredMonsters[index!]
+                }
+                else {
+                    monster = api_monster_list[index!]
+                }
+                monsterView.monsterName = monster.name!
+                monsterView.maxhp = monster.hp_max!
+                monsterView.maxatk = monster.atk_max!
+                monsterView.maxrcv = monster.rcv_max!
+                monsterView.activeskill = monster.active_skill!
+                monsterView.m_id = monster.id!
+                monsterView.img_40 = monster.image40_href
+                
+                if (monster.image60_href != nil) {
+                    monsterView.img_60 = monster.image60_href!
+                }
+                
+                // some monsters, such as assist evos, do not have a leader skill
+                if monster.leader_skill != nil {
+                    monsterView.leaderskill = monster.leader_skill!
+                }
+                else {
+                    monsterView.leaderskill = "No Leader Skill available."
+                }
+            }
+        }
     }
     
-//
-//    private func makeMonsterObj() {
-//
-//        for mnstr in api_monster_list {
-//
-//            var monster = Monster
-//
-//
-//        }
-//
-//
-//
-//    }
+    
+    
+    
+    
+    
+    
+    
+    // PROCESSING FUNCTIONS
+    
+    
     
     // function to delete all records from Core Data
     private func deleteAllRecords() {
@@ -238,6 +308,11 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             }.resume()
     }
     
+    
+    
+    // ADDED METHODS FOR UI FUNCTION
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if (searchBar.text == nil || searchBar.text == "") {
             isSearching = false
@@ -251,76 +326,13 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             monstertable.reloadData()
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isSearching) {
-            return filteredMonsters.count
-        }
-        return api_monster_list.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
-        
-        
-        if (isSearching) {
-            cell.textLabel!.text! = filteredMonsters[indexPath.row].name!
-            cell.detailTextLabel!.text! = String(filteredMonsters[indexPath.row].id!)
-        }
-            
-        else {
-            cell.textLabel!.text! = api_monster_list[indexPath.row].name!
-            cell.detailTextLabel!.text! = String(api_monster_list[indexPath.row].id!)
-        }
-
-        return cell
-    }
-
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "monsterviewsegue") {
-            if let monsterView = segue.destination as? MonsterView {
-                // Get the current table entry's index
-                let index = self.tableView.indexPathForSelectedRow?.row
-                var monster:Monster
-                if (isSearching) {
-                    monster = filteredMonsters[index!]
-                }
-                else {
-                    monster = api_monster_list[index!]
-                }
-                monsterView.monsterName = monster.name!
-                monsterView.maxhp = monster.hp_max!
-                monsterView.maxatk = monster.atk_max!
-                monsterView.maxrcv = monster.rcv_max!
-                monsterView.activeskill = monster.active_skill!
-                monsterView.m_id = monster.id!
-                monsterView.img_40 = monster.image40_href
-                
-                if (monster.image60_href != nil) {
-                    monsterView.img_60 = monster.image60_href!
-                }
-                
-                // some monsters, such as assist evos, do not have a leader skill
-                if monster.leader_skill != nil {
-                    monsterView.leaderskill = monster.leader_skill!
-                }
-                else {
-                    monsterView.leaderskill = "No Leader Skill available."
-                }
-            }
-        }
+    
+    
+    @objc func refresh() {
+        // Code to refresh table view
+        api_monster_list = []
+        fillMonsterData()
+        refreshControl?.endRefreshing()
+        self.monstertable.reloadData()
     }
 }
