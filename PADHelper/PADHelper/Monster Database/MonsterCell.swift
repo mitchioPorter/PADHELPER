@@ -10,6 +10,10 @@ import UIKit
 
 class MonsterCell: UITableViewCell {
 
+    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var id: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

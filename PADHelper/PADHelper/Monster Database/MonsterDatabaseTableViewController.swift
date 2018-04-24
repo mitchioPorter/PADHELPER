@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import CoreData
+import Kingfisher
 
 
 // Struct to represent each monster found in the PADHerder api
@@ -125,6 +126,9 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
         fillMonsterData()
         
+        self.monstertable.rowHeight = 60
+        self.monstertable.reloadData()
+        
 //        fillActiveSkillData()
 //        fillLeaderSkillData()
 
@@ -150,17 +154,32 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
         
         
         if (isSearching) {
-            cell.textLabel!.text! = filteredMonsters[indexPath.row].name!
-            cell.detailTextLabel!.text! = String(filteredMonsters[indexPath.row].id!)
+            let currentMonster:Monster = filteredMonsters[indexPath.row]
+            
+            cell.name.text = currentMonster.name!
+            cell.id.text = String(currentMonster.id!)
+            
+            let url = URL(string: base_url + currentMonster.image40_href!)
+            
+            cell.img.kf.setImage(with: url)
         }
             
         else {
-            cell.textLabel!.text! = api_monster_list[indexPath.row].name!
-            cell.detailTextLabel!.text! = String(api_monster_list[indexPath.row].id!)
+            
+            let currentMonster:Monster = api_monster_list[indexPath.row]
+            
+            cell.name.text = currentMonster.name!
+            cell.id.text = String(currentMonster.id!)
+            
+            let url = URL(string: base_url + currentMonster.image40_href!)
+            
+            cell.img.kf.setImage(with: url)
+            
+            print(currentMonster.id!)
         }
 
         return cell
