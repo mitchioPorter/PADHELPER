@@ -62,7 +62,6 @@ class IndividualTeamTableTableViewController: UITableViewController {
         let index = indexPath.row
         
         let mnstr = api_monster_list.filter({$0.id! == Int(teamIDs[index])})[0]
-        print(mnstr.name!)
         cell.textLabel?.text = mnstr.name!
         cell.detailTextLabel?.text = String(mnstr.id!)
 
@@ -105,14 +104,18 @@ class IndividualTeamTableTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "monstersegue" {
+            if let monsterView = segue.destination as? MonsterView {
+                let index = self.teamView.indexPathForSelectedRow?.row
+                monsterView.m_id = Int(teamIDs[index!])
+            }
+        }
     }
-    */
-
 }

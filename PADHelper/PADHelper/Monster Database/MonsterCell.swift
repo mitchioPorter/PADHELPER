@@ -13,6 +13,10 @@ class MonsterCell: UITableViewCell {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var id: UILabel!
+    @IBOutlet weak var rarity: UILabel!
+    @IBOutlet weak var hp: UILabel!
+    @IBOutlet weak var atk: UILabel!
+    @IBOutlet weak var rcv: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

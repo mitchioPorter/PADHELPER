@@ -13,6 +13,7 @@ class TeamListTableViewController: UITableViewController {
     
     @IBOutlet var teamlistview: UITableView!
     
+    
     // An array of Teams
     // Each entry is a team object with attributes for the id's of the monsters on the team
     var teams: [NSManagedObject] = []
@@ -80,42 +81,54 @@ class TeamListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teamcell", for: indexPath) as! TeamCell
+    
+
+        let team = teams[indexPath.row] as! Team
+        let id = Int(team.monster1)
+        let id2 = Int(team.monster2)
+        let id3 = Int(team.monster3)
+        let id4 = Int(team.monster4)
+        let id5 = Int(team.monster5)
+        let id6 = Int(team.monster6)
+
         
-        if (teams.count != 0) {
+        let monsters = api_monster_list.filter({$0.id! == id || $0.id! == id2 || $0.id! == id3 || $0.id! == id4 || $0.id! == id5 || $0.id! == id6})
+        let m_1 = monsters.filter({$0.id! == id})[0]
+        let m_2 = monsters.filter({$0.id! == id2})[0]
+        let m_3 = monsters.filter({$0.id! == id3})[0]
+        let m_4 = monsters.filter({$0.id! == id4})[0]
+        let m_5 = monsters.filter({$0.id! == id5})[0]
+        let m_6 = monsters.filter({$0.id! == id6})[0]
 
-            let team = teams[indexPath.row] as! Team
-            let id = Int(team.monster1)
-            let id2 = Int(team.monster2)
-            let id3 = Int(team.monster3)
-            let id4 = Int(team.monster4)
-            let id5 = Int(team.monster5)
-            let id6 = Int(team.monster6)
-
-            
-            let monsters = api_monster_list.filter({$0.id! == id || $0.id! == id2 || $0.id! == id3 || $0.id! == id4 || $0.id! == id5 || $0.id! == id6})
-            let m_1 = monsters.filter({$0.id! == id})[0]
-            let m_2 = monsters.filter({$0.id! == id2})[0]
-            let m_3 = monsters.filter({$0.id! == id3})[0]
-            let m_4 = monsters.filter({$0.id! == id4})[0]
-            let m_5 = monsters.filter({$0.id! == id5})[0]
-            let m_6 = monsters.filter({$0.id! == id6})[0]
-
-            
-            
-            let img_url = base_img_url + m_1.image40_href!
-            cell.m1.setImageFromURl(stringImageUrl: img_url)
-            let img_url2 = base_img_url + m_2.image40_href!
-            cell.m2.setImageFromURl(stringImageUrl: img_url2)
-            let img_url3 = base_img_url + m_3.image40_href!
-            cell.m3.setImageFromURl(stringImageUrl: img_url3)
-            let img_url4 = base_img_url + m_4.image40_href!
-            cell.m4.setImageFromURl(stringImageUrl: img_url4)
-            let img_url5 = base_img_url + m_5.image40_href!
-            cell.m5.setImageFromURl(stringImageUrl: img_url5)
-            let img_url6 = base_img_url + m_6.image40_href!
-            cell.m6.setImageFromURl(stringImageUrl: img_url6)
-        }
         
+        
+        let img_url = base_img_url + m_1.image40_href!
+        
+        var url = URL(string: img_url)
+        cell.m1.kf.setImage(with: url)
+        
+        let img_url2 = base_img_url + m_2.image40_href!
+        url = URL(string: img_url2)
+        cell.m2.kf.setImage(with: url)
+        
+        let img_url3 = base_img_url + m_3.image40_href!
+        url = URL(string: img_url3)
+        cell.m3.kf.setImage(with: url)
+        
+        let img_url4 = base_img_url + m_4.image40_href!
+        url = URL(string: img_url4)
+        cell.m4.kf.setImage(with: url)
+        
+        let img_url5 = base_img_url + m_5.image40_href!
+        url = URL(string: img_url5)
+        cell.m5.kf.setImage(with: url)
+        
+        let img_url6 = base_img_url + m_6.image40_href!
+        url = URL(string: img_url6)
+        cell.m6.kf.setImage(with: url)
+    
+
+        cell.teamname.text! = team.name!
 
         return cell
     }

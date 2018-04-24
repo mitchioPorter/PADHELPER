@@ -126,7 +126,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
         fillMonsterData()
         
-        self.monstertable.rowHeight = 60
+        self.monstertable.rowHeight = 85
         self.monstertable.reloadData()
         
 //        fillActiveSkillData()
@@ -162,6 +162,10 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             
             cell.name.text = currentMonster.name!
             cell.id.text = String(currentMonster.id!)
+            cell.rarity.text = String(currentMonster.rarity!) + "*"
+            cell.hp.text = String(currentMonster.hp_max!)
+            cell.atk.text = String(currentMonster.atk_max!)
+            cell.rcv.text = String(currentMonster.rcv_max!)
             
             let url = URL(string: base_url + currentMonster.image40_href!)
             
@@ -174,12 +178,15 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             
             cell.name.text = currentMonster.name!
             cell.id.text = String(currentMonster.id!)
+            cell.rarity.text = String(currentMonster.rarity!) + "*"
+            cell.hp.text = String(currentMonster.hp_max!)
+            cell.atk.text = String(currentMonster.atk_max!)
+            cell.rcv.text = String(currentMonster.rcv_max!)
             
             let url = URL(string: base_url + currentMonster.image40_href!)
             
             cell.img.kf.setImage(with: url)
-            
-            print(currentMonster.id!)
+        
         }
 
         return cell
@@ -199,34 +206,14 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 else {
                     monster = api_monster_list[index!]
                 }
-                monsterView.monsterName = monster.name!
-                monsterView.maxhp = monster.hp_max!
-                monsterView.maxatk = monster.atk_max!
-                monsterView.maxrcv = monster.rcv_max!
-                monsterView.activeskill = monster.active_skill!
+
                 monsterView.m_id = monster.id!
-                monsterView.img_40 = monster.image40_href
-                
-                if (monster.image60_href != nil) {
-                    monsterView.img_60 = monster.image60_href!
-                }
-                
-                // some monsters, such as assist evos, do not have a leader skill
-                if monster.leader_skill != nil {
-                    monsterView.leaderskill = monster.leader_skill!
-                }
-                else {
-                    monsterView.leaderskill = "No Leader Skill available."
-                }
+
             }
         }
     }
     
-    
-    
-    
-    
-    
+
     
     
     // PROCESSING FUNCTIONS

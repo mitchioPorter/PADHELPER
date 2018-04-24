@@ -29,15 +29,10 @@ class MonsterView: UIViewController {
     @IBOutlet weak var monster_img: UIImageView!
 
     
-    var monsterName:String?
-    var maxhp:Int?
-    var maxatk:Int?
-    var maxrcv:Int?
-    var activeskill:String?
-    var leaderskill:String?
     var m_id:Int?
-    var img_40:String?
-    var img_60:String?
+    
+    var mnstr:Monster?
+
     
     var base_img_url = "https://www.padherder.com"
     
@@ -45,22 +40,40 @@ class MonsterView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Monster View"
+        
+        mnstr = api_monster_list.filter({$0.id! == Int(m_id!)})[0]
+
 
         // Do any additional setup after loading the view.
-        name.text! = self.monsterName!
-        max_hp.text! = String(self.maxhp!)
-        max_atk.text! = String(self.maxatk!)
-        max_rcv.text! = String(self.maxrcv!)
-        active_skill.text! = self.activeskill!
-        leader_skill.text! = self.leaderskill!
+        name.text! = mnstr!.name!
+        max_hp.text! = String(mnstr!.hp_max!)
+        max_atk.text! = String(mnstr!.atk_max!)
+        max_rcv.text! = String(mnstr!.rcv_max!)
         
-        if (self.img_60 != nil) {
-            let img_url = base_img_url + self.img_60!
-            self.monster_img.setImageFromURl(stringImageUrl: img_url)
+        if (mnstr!.active_skill != nil) {
+            active_skill.text! = mnstr!.active_skill!
         }
         else {
-            let img_url = base_img_url + self.img_40!
-            self.monster_img.setImageFromURl(stringImageUrl: img_url)
+            active_skill.text! = "This monster has no active skill."
+        }
+        
+        
+        if (mnstr!.leader_skill != nil) {
+            leader_skill.text! = mnstr!.leader_skill!
+        }
+        else {
+            leader_skill.text! = "This monster has no leader skill."
+        }
+            
+        if (mnstr!.image60_href != nil) {
+            let img_url = base_img_url + mnstr!.image60_href!
+            let url = URL(string: img_url)
+            monster_img.kf.setImage(with: url)
+        }
+        else {
+            let img_url = base_img_url + mnstr!.image40_href!
+            let url = URL(string: img_url)
+            monster_img.kf.setImage(with: url)
         }
     }
 

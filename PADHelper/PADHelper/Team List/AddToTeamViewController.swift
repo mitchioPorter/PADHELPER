@@ -19,7 +19,8 @@ class AddToTeamViewController: UIViewController {
     @IBOutlet weak var m5: UITextField!
     @IBOutlet weak var m6: UITextField!
 
-
+    @IBOutlet weak var teamname: UITextField!
+    
     @IBAction func saveTeam(_ sender: Any) {
         addCandidate()
     }
@@ -46,6 +47,7 @@ class AddToTeamViewController: UIViewController {
         item.setValue(Int(m4.text!), forKey: "monster4")
         item.setValue(Int(m5.text!), forKey: "monster5")
         item.setValue(Int(m6.text!), forKey: "monster6")
+        item.setValue(teamname.text!, forKey: "name")
 
         do {
             try managedContext.save()
