@@ -22,6 +22,7 @@
 		789667952072D15100226C21 /* MonsterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789667942072D15100226C21 /* MonsterCell.swift */; };
 		78BC5FDB208E988F008FF96F /* IndividualTeamTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */; };
 		79D1E905E026F9DCD28756EF /* Pods_PADHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB3DD7B60707D7981A37F06F /* Pods_PADHelper.framework */; };
+		A3A64D8A20928C2F009EF4E7 /* DamageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseTableViewController.swift; sourceTree = "<group>"; };
 		789667942072D15100226C21 /* MonsterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCell.swift; sourceTree = "<group>"; };
 		78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualTeamTableTableViewController.swift; sourceTree = "<group>"; };
+		A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageCalculator.swift; sourceTree = "<group>"; };
 		A845CFFA30BBB6660A35B0D0 /* Pods-PADHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PADHelper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PADHelper/Pods-PADHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		DB3DD7B60707D7981A37F06F /* Pods_PADHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PADHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 		7896676720719CBD00226C21 /* PADHelper */ = {
 			isa = PBXGroup;
 			children = (
+				A3A64D8820928BEE009EF4E7 /* DamageCalculator */,
 				7896676820719CBD00226C21 /* AppDelegate.swift */,
 				7896676C20719CBD00226C21 /* Main.storyboard */,
 				7896677220719CBD00226C21 /* Assets.xcassets */,
@@ -121,6 +124,14 @@
 				7891E26B2072D81D00321E7B /* Monster Database */,
 			);
 			path = PADHelper;
+			sourceTree = "<group>";
+		};
+		A3A64D8820928BEE009EF4E7 /* DamageCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */,
+			);
+			path = DamageCalculator;
 			sourceTree = "<group>";
 		};
 		C8B33FC2FFF8C98CC7D9387D /* Frameworks */ = {
