@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DamageCalculator: UIViewController {
 
     @IBOutlet weak var Monster1Name: UILabel!
@@ -24,8 +25,21 @@ class DamageCalculator: UIViewController {
     @IBOutlet weak var LightCombo: UITextField!
     @IBOutlet weak var DarkCombo: UITextField!
     @IBOutlet weak var HeartCombo: UITextField!
+    @IBOutlet weak var outputNotif: UILabel!
+    @IBOutlet weak var Damagebutone: UIButton!
     
     public var teamIDs:[Int64] = []
+    
+    @IBAction func CalculateDamage(_ sender: Any) {
+        if(RedCombo.text == "" || BlueCombo.text == "" || GreenCombo.text == "" || DarkCombo.text == "" || LightCombo.text == "" || HeartCombo.text == ""){
+            if(isNumeric(a: GreenCombo.text!) && isNumeric(a: RedCombo.text!) && isNumeric(a: BlueCombo.text!) && isNumeric(a: LightCombo.text!)
+                && isNumeric(a: DarkCombo.text!) && isNumeric(a: HeartCombo.text!)){
+            outputNotif.text = "FILL IN ALL THE BLANKS WITH NUMBERS"
+            }else{
+                performSegue(withIdentifier: "damStats", sender: Damagebutone)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +53,9 @@ class DamageCalculator: UIViewController {
     }
     
     
-   
+    func isNumeric(a: String) -> Bool {
+        return Double(a) != nil
+    }
     /*
     // MARK: - Navigation
 
@@ -49,5 +65,8 @@ class DamageCalculator: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+   
+    
+
 
 }
