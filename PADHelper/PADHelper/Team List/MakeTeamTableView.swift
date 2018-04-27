@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import CoreData
+import Kingfisher
 
 class MakeTeamTableView: UITableViewController {
     @IBOutlet var teamtable: UITableView!
     
-    var newTeam:[Monster] = []
+    var newTeam:[Monster] = [api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0]]
     
+    @IBAction func addTeam(_ sender: Any) {
+        addCandidate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,10 +28,7 @@ class MakeTeamTableView: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         teamtable.rowHeight = 100
-        
-        for m in newTeam {
-            print (m.name!)
-        }
+        teamtable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,23 +50,24 @@ class MakeTeamTableView: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
+    
+    
+        let currentMonster:Monster = newTeam[indexPath.row]
         
-        if newTeam.count != 0 {
+        cell.name.text = currentMonster.name!
+        cell.name.isHidden = false
         
-            let currentMonster:Monster = newTeam[indexPath.row]
-            
-            cell.name.text = currentMonster.name!
-            cell.id.text = String(currentMonster.id!)
-            cell.rarity.text = String(currentMonster.rarity!) + "*"
-            cell.hp.text = String(currentMonster.hp_max!)
-            cell.atk.text = String(currentMonster.atk_max!)
-            cell.rcv.text = String(currentMonster.rcv_max!)
-            
-            let url = URL(string: base_url + currentMonster.image40_href!)
-            
-            cell.img.kf.setImage(with: url)
+        cell.id.text = String(currentMonster.id!)
+        cell.rarity.text = String(currentMonster.rarity!) + "*"
+        cell.hp.text = String(currentMonster.hp_max!)
+        cell.atk.text = String(currentMonster.atk_max!)
+        cell.rcv.text = String(currentMonster.rcv_max!)
         
-        }
+        let url = URL(string: base_url + currentMonster.image40_href!)
+        
+        cell.img.kf.setImage(with: url)
+    
+    
 
         return cell
     }
@@ -118,20 +121,34 @@ class MakeTeamTableView: UITableViewController {
         }
     }
  
-    
-    
-    
-    
     @IBAction func sendtoAdd(segue: UIStoryboardSegue) {
         let vc = segue.source as! SelectFromMonsterDB
-        
         if let selectedMonster = vc.chosenMonster {
             let slot = vc.slot!
             newTeam.insert(selectedMonster, at: slot)
-            
-            print(selectedMonster.name!)
             teamtable.reloadData()
         }
     }
 
+    func addCandidate() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
+        let item = NSManagedObject(entity: entity, insertInto: managedContext)
+        item.setValue(Int(newTeam[0].id!), forKey: "monster1")
+        item.setValue(Int(newTeam[1].id!), forKey: "monster2")
+        item.setValue(Int(newTeam[2].id!), forKey: "monster3")
+        item.setValue(Int(newTeam[3].id!), forKey: "monster4")
+        item.setValue(Int(newTeam[4].id!), forKey: "monster5")
+        item.setValue(Int(newTeam[5].id!), forKey: "monster6")
+        item.setValue("Team", forKey: "name")
+        
+        do {
+            try managedContext.save()
+        } catch let err as NSError {
+            print("Failed to save candidate.", err)
+        }
+        
+        super.tabBarController?.viewControllers![1].viewWillAppear(true)
+    }
 }
