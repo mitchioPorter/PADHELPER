@@ -8,16 +8,6 @@
 
 import UIKit
 
-extension UIImageView{
-    func setImageFromURl(stringImageUrl url: String){
-        if let url = NSURL(string: url) {
-            if let data = NSData(contentsOf: url as URL) {
-                self.image = UIImage(data: data as Data)
-            }
-        }
-    }
-}
-
 class MonsterView: UIViewController {
 
     @IBOutlet weak var name: UILabel!
@@ -28,6 +18,8 @@ class MonsterView: UIViewController {
     @IBOutlet weak var leader_skill: UILabel!
     @IBOutlet weak var monster_img: UIImageView!
 
+
+    @IBOutlet weak var addmonster: UIButton!
     
     var m_id:Int?
     

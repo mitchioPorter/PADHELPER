@@ -18,6 +18,8 @@ class MonsterCell: UITableViewCell {
     @IBOutlet weak var atk: UILabel!
     @IBOutlet weak var rcv: UILabel!
     
+    var mnstr:Monster?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

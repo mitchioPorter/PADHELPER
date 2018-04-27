@@ -1,40 +1,32 @@
 //
-//  IndividualTeamTableTableViewController.swift
+//  MakeTeamTableView.swift
 //  PADHelper
 //
-//  Created by Rohil Thopu on 4/23/18.
+//  Created by Rohil Thopu on 4/27/18.
 //  Copyright © 2018 Rohil Thopu. All rights reserved.
 //
 
 import UIKit
 
-class IndividualTeamTableTableViewController: UITableViewController {
+class MakeTeamTableView: UITableViewController {
+    @IBOutlet var teamtable: UITableView!
     
-    @IBOutlet var teamView: UITableView!
+    var newTeam:[Monster] = []
     
-    var team:Team?
-    
-    var teamIDs:[Int64] = []
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        getIDs()
-        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    private func getIDs() {
-        teamIDs.append(team!.monster1)
-        teamIDs.append(team!.monster2)
-        teamIDs.append(team!.monster3)
-        teamIDs.append(team!.monster4)
-        teamIDs.append(team!.monster5)
-        teamIDs.append(team!.monster6)
+        
+        teamtable.rowHeight = 100
+        
+        for m in newTeam {
+            print (m.name!)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,23 +43,31 @@ class IndividualTeamTableTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return teamIDs.count
+        return 6
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "teammonstercell", for: indexPath)
-
-        // Configure the cell...
-        let index = indexPath.row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
         
-        let mnstr = api_monster_list.filter({$0.id! == Int(teamIDs[index])})[0]
-        cell.textLabel?.text = mnstr.name!
-        cell.detailTextLabel?.text = String(mnstr.id!)
+        if newTeam.count != 0 {
+        
+            let currentMonster:Monster = newTeam[indexPath.row]
+            
+            cell.name.text = currentMonster.name!
+            cell.id.text = String(currentMonster.id!)
+            cell.rarity.text = String(currentMonster.rarity!) + "*"
+            cell.hp.text = String(currentMonster.hp_max!)
+            cell.atk.text = String(currentMonster.atk_max!)
+            cell.rcv.text = String(currentMonster.rcv_max!)
+            
+            let url = URL(string: base_url + currentMonster.image40_href!)
+            
+            cell.img.kf.setImage(with: url)
+        
+        }
 
         return cell
     }
- 
 
     /*
     // Override to support conditional editing of the table view.
@@ -111,17 +111,27 @@ class IndividualTeamTableTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "monstersegue" {
-            if let monsterView = segue.destination as? MonsterView {
-                let index = self.teamView.indexPathForSelectedRow?.row
-                monsterView.m_id = Int(teamIDs[index!])
-            }
-        }
-        
-        else if segue.identifier == "monster1" {
-            if let monsterDB = segue.destination as? MonsterDatabaseTableViewController {
-                monsterDB.slot = 1
+        if segue.identifier == "choosesegue" {
+            if let vc = segue.destination as? SelectFromMonsterDB {
+                vc.slot = teamtable.indexPathForSelectedRow?.row
             }
         }
     }
+ 
+    
+    
+    
+    
+    @IBAction func sendtoAdd(segue: UIStoryboardSegue) {
+        let vc = segue.source as! SelectFromMonsterDB
+        
+        if let selectedMonster = vc.chosenMonster {
+            let slot = vc.slot!
+            newTeam.insert(selectedMonster, at: slot)
+            
+            print(selectedMonster.name!)
+            teamtable.reloadData()
+        }
+    }
+
 }

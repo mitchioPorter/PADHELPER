@@ -19,13 +19,30 @@ class AddToTeamViewController: UIViewController {
     @IBOutlet weak var m5: UITextField!
     @IBOutlet weak var m6: UITextField!
 
+    @IBOutlet weak var monster1: UILabel!
+    
+    var chosenMonsters:[Monster] = []
+    
     @IBOutlet weak var teamname: UITextField!
     
     @IBAction func saveTeam(_ sender: Any) {
         addCandidate()
     }
+    
+    @IBAction func sendtoAdd(segue: UIStoryboardSegue) {
+        let vc = segue.source as! SelectFromMonsterDB
+        
+        if let selectedMonster = vc.chosenMonster {
+            
+        }
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
 
         // Do any additional setup after loading the view.
