@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7857BEC02093C31F005D7151 /* SelectFromMonsterDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEBF2093C31F005D7151 /* SelectFromMonsterDB.swift */; };
 		7857BEC22093D765005D7151 /* MakeTeamTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC12093D765005D7151 /* MakeTeamTableView.swift */; };
+		7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC32093EA28005D7151 /* SettingsViewController.swift */; };
 		788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */; };
 		788C167E207D70B900E9183F /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167D207D70B900E9183F /* TeamCell.swift */; };
 		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
@@ -27,6 +28,7 @@
 		3FD02415785DFADB9FE87312 /* Pods-PADHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PADHelper.release.xcconfig"; path = "Pods/Target Support Files/Pods-PADHelper/Pods-PADHelper.release.xcconfig"; sourceTree = "<group>"; };
 		7857BEBF2093C31F005D7151 /* SelectFromMonsterDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFromMonsterDB.swift; sourceTree = "<group>"; };
 		7857BEC12093D765005D7151 /* MakeTeamTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeTeamTableView.swift; sourceTree = "<group>"; };
+		7857BEC32093EA28005D7151 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListTableViewController.swift; sourceTree = "<group>"; };
 		788C167D207D70B900E9183F /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,14 @@
 				3FD02415785DFADB9FE87312 /* Pods-PADHelper.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7857BEC52093EA9C005D7151 /* Essentials */ = {
+			isa = PBXGroup;
+			children = (
+				7857BEC32093EA28005D7151 /* SettingsViewController.swift */,
+			);
+			path = Essentials;
 			sourceTree = "<group>";
 		};
 		788C1681207D83C500E9183F /* Team List */ = {
@@ -109,15 +119,16 @@
 		7896676720719CBD00226C21 /* PADHelper */ = {
 			isa = PBXGroup;
 			children = (
-				A3A64D8820928BEE009EF4E7 /* DamageCalculator */,
 				7896676820719CBD00226C21 /* AppDelegate.swift */,
 				7896676C20719CBD00226C21 /* Main.storyboard */,
 				7896677220719CBD00226C21 /* Assets.xcassets */,
 				7896677420719CBD00226C21 /* LaunchScreen.storyboard */,
 				7896677720719CBD00226C21 /* Info.plist */,
 				7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */,
-				788C1681207D83C500E9183F /* Team List */,
+				A3A64D8820928BEE009EF4E7 /* DamageCalculator */,
+				7857BEC52093EA9C005D7151 /* Essentials */,
 				7891E26B2072D81D00321E7B /* Monster Database */,
+				788C1681207D83C500E9183F /* Team List */,
 			);
 			path = PADHelper;
 			sourceTree = "<group>";
@@ -253,6 +264,7 @@
 			files = (
 				7857BEC02093C31F005D7151 /* SelectFromMonsterDB.swift in Sources */,
 				788C167E207D70B900E9183F /* TeamCell.swift in Sources */,
+				7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */,
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
 				788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */,

@@ -17,6 +17,7 @@ class MakeTeamTableView: UITableViewController {
     
     @IBAction func addTeam(_ sender: Any) {
         addCandidate()
+        self.navigationController!.popViewController(animated: true)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class MakeTeamTableView: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 6
+        return newTeam.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,7 +126,7 @@ class MakeTeamTableView: UITableViewController {
         let vc = segue.source as! SelectFromMonsterDB
         if let selectedMonster = vc.chosenMonster {
             let slot = vc.slot!
-            newTeam.insert(selectedMonster, at: slot)
+            newTeam[slot] = selectedMonster
             teamtable.reloadData()
         }
     }
