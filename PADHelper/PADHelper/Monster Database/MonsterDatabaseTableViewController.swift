@@ -65,13 +65,29 @@ var img60:[UIImage] = []
 
 
 
+
+/// URLS
+
+
+// PadHerder url for getting images
+let base_url:String = "https://www.padherder.com/"
+
+
+
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    
+    
+    // FOR ADDING TO TEAM
+    var slot:Int?
+    
+    
     
     @IBOutlet var monstertable: UITableView!
     
     @IBOutlet weak var monstersearch: UISearchBar!
     
- 
+    
     // url for PadHerder monster api
     let monster_api_url:String = "https://www.padherder.com/api/monsters/"
     
@@ -83,13 +99,9 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     // url for PadHerder awakening api
     let awakening_api_url:String = "https://www.padherder.com/api/awakenings/"
-    
-    // PadHerder url for getting images
-    let base_url:String = "https://www.padherder.com/"
-    
-    
-    // ARRAYS FOR API DATA
 
+    // ARRAYS FOR API DATA
+    
     
     // array of leader skills pulled from the API
     var api_leader_skill_list:[Leader_Skill] = []
@@ -111,14 +123,14 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     // a bool to tell when searching
     var isSearching = false
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         monstersearch.delegate = self
         monstersearch.returnKeyType = UIReturnKeyType.done
         self.title = "Monster Database"
-
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
@@ -129,30 +141,30 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         self.monstertable.rowHeight = 85
         self.monstertable.reloadData()
         
-//        fillActiveSkillData()
-//        fillLeaderSkillData()
-
+        //        fillActiveSkillData()
+        //        fillLeaderSkillData()
+        
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (isSearching) {
             return filteredMonsters.count
         }
         return api_monster_list.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
         
@@ -186,12 +198,12 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             let url = URL(string: base_url + currentMonster.image40_href!)
             
             cell.img.kf.setImage(with: url)
-        
+            
         }
-
+        
         return cell
     }
-
+    
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -206,14 +218,14 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 else {
                     monster = api_monster_list[index!]
                 }
-
+                
                 monsterView.m_id = monster.id!
-
+                
             }
         }
     }
     
-
+    
     
     
     // PROCESSING FUNCTIONS
