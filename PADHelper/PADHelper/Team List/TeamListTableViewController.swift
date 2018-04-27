@@ -23,7 +23,7 @@ class TeamListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        deleteAllRecords()
+ //       deleteAllRecords()
 
         self.teamlistview.rowHeight = 100
         self.teamlistview.reloadData()

@@ -117,5 +117,10 @@ class IndividualTeamTableTableViewController: UITableViewController {
                 monsterView.m_id = Int(teamIDs[index!])
             }
         }
+        if segue.identifier == "DamageSeque" {
+            if let damageCalculator = segue.destination as? DamageCalculator {
+                damageCalculator.teamIDs = teamIDs
+            }
+        }
     }
 }
