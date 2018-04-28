@@ -698,8 +698,7 @@
                             <items>
                                 <barButtonItem title="Damage Calculator" width="371" id="DFX-5D-EFT">
                                     <connections>
-                                        <action selector="DamageCalculatorButton:" destination="M4u-8N-hRD" id="ITA-IZ-FmL"/>
-                                        <segue destination="Bq3-uY-IQc" kind="show" identifier="DamageSeque" id="Hyq-rQ-4Uz"/>
+                                        <segue destination="Bq3-uY-IQc" kind="show" id="9mN-Qk-9LS"/>
                                     </connections>
                                 </barButtonItem>
                             </items>
@@ -739,7 +738,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="DamageCalculatorButton" destination="Qah-hT-RP2" id="2vG-IF-eTk"/>
                         <outlet property="teamView" destination="Qah-hT-RP2" id="JlL-0r-wzz"/>
                     </connections>
                 </tableViewController>
@@ -1400,6 +1398,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="YAC-Ob-2dV"/>
-        <segue reference="uVM-Eu-Hwd"/>
+        <segue reference="ruQ-CV-Y3F"/>
     </inferredMetricsTieBreakers>
 </document>
