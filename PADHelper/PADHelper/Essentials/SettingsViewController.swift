@@ -30,6 +30,7 @@ class SettingsViewController: UIViewController {
             print ("There was an error")
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
