@@ -41,6 +41,16 @@ class DamageCalculator: UIViewController {
     var mnstr5:Monster?
     var mnstr6:Monster?
     
+    var redDam:Int = 0
+    var greenDam:Int = 0
+    var blueDam:Int = 0
+    var lightDam:Int = 0
+    var darkDam:Int = 0
+    var rcvAmt:Int = 0
+    
+    var comboMultiplier: Double = 0.0
+    var totalCombo: Int = 0
+    
     var base_img_url1 = "https://www.padherder.com"
     var base_img_url2 = "https://www.padherder.com"
     
@@ -65,6 +75,13 @@ class DamageCalculator: UIViewController {
         mnstr5 = api_monster_list.filter({$0.id! == Int(teamIDs[3])})[0]
         mnstr6 = api_monster_list.filter({$0.id! == Int(teamIDs[4])})[0]
         
+        print("\(mnstr1?.element ?? 100)")
+        print("\(mnstr2?.element ?? 100)")
+        print("\(mnstr3?.element ?? 100)")
+        print("\(mnstr4?.element ?? 100)")
+        print("\(mnstr5?.element ?? 100)")
+
+        
         Monster1Name.text! = mnstr1!.name!
         
         if (mnstr1!.leader_skill != nil) {
@@ -83,7 +100,6 @@ class DamageCalculator: UIViewController {
             let url = URL(string: img_url)
             Monster1Image.kf.setImage(with: url)
         }
-        
         
         mnstr2 = api_monster_list.filter({$0.id! == Int(teamIDs[5])})[0]
         
@@ -105,6 +121,8 @@ class DamageCalculator: UIViewController {
             let url = URL(string: img_url)
             Monster2Image.kf.setImage(with: url)
         }
+        
+       
         
     }
 
@@ -141,15 +159,115 @@ class DamageCalculator: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDamStats" {
             if let calDam = segue.destination as? CalculatedDamageViewController {
+                
+                baseDamageCalculator(mon:mnstr1!)
+                baseDamageCalculator(mon:mnstr2!)
+                baseDamageCalculator(mon:mnstr3!)
+                baseDamageCalculator(mon:mnstr4!)
+                baseDamageCalculator(mon:mnstr5!)
+                baseDamageCalculator(mon:mnstr6!)
+                
                 calDam.rCombo = Int(RedCombo.text!)!
                 calDam.gCombo = Int(GreenCombo.text!)!
                 calDam.bCombo = Int(BlueCombo.text!)!
                 calDam.lCombo = Int(LightCombo.text!)!
                 calDam.dCombo = Int(DarkCombo.text!)!
                 calDam.hCombo = Int(HeartCombo.text!)!
+                
+                totalCombo = Int(RedCombo.text!)! + Int(GreenCombo.text!)! + Int(BlueCombo.text!)! + Int(LightCombo.text!)! + Int(DarkCombo.text!)! + Int(HeartCombo.text!)! + Int(OtherCombo.text!)!
+                
+                calculateDamage()
+                calDam.comboMultiplier = comboMultiplier
+                
+                calDam.redDamage = redDam
+                calDam.blueDamage = blueDam
+                calDam.greenDamage = greenDam
+                calDam.lightDamage = lightDam
+                calDam.darkDamage = darkDam
+                calDam.recoveryAmount = rcvAmt
+                calDam.totalCombo = totalCombo
+                
             }
         }
     }
-
+    
+    func baseDamageCalculator(mon:Monster){
+        //0 = r
+        //1 = b
+        //2 = g
+        //3 = l
+        //4 = d
+        
+        rcvAmt += mon.rcv_max!
+        
+        if(mon.element == 0){
+            redDam += mon.atk_max!
+        }
+        else if(mon.element == 1){
+            blueDam += mon.atk_max!
+        }
+        else if(mon.element == 2){
+            greenDam += mon.atk_max!
+        }
+        else if(mon.element == 3){
+            lightDam += mon.atk_max!
+        }
+        else if(mon.element == 4){
+            darkDam += mon.atk_max!
+        }
+        
+        if(mon.element2 == 0){
+            if(mon.element2 == mon.element){
+                redDam += Int(mon.atk_max! / 10)
+            }
+            else{
+                redDam += Int(3 * mon.atk_max! / 10)
+            }
+        }
+        else if(mon.element2 == 1){
+            if(mon.element2 == mon.element){
+                blueDam += Int(mon.atk_max! / 10)
+            }
+            else{
+                blueDam += Int(3 * mon.atk_max! / 10)
+            }
+        }
+        else if(mon.element2 == 2){
+            if(mon.element2 == mon.element){
+                greenDam += Int(mon.atk_max! / 10)
+            }
+            else{
+                greenDam += Int(3 * mon.atk_max! / 10)
+            }
+        }
+        else if(mon.element2 == 3){
+            if(mon.element2 == mon.element){
+                lightDam += Int(mon.atk_max! / 10)
+            }
+            else{
+                lightDam += Int(3 * mon.atk_max! / 10)
+            }
+        }
+        else if(mon.element2 == 4){
+            if(mon.element2 == mon.element){
+                darkDam += Int(mon.atk_max! / 10)
+            }
+            else{
+                darkDam += Int(3 * mon.atk_max! / 10)
+            }
+        }
+        
+    }
+    
+    func calculateDamage(){
+        if((totalCombo > 1)){
+           comboMultiplier = Double(1 + ((totalCombo - 1) / 4) * redDam)
+            if(comboMultiplier > 3.25){
+                comboMultiplier = 3.25
+            }
+        }
+        
+        
+    }
 
 }

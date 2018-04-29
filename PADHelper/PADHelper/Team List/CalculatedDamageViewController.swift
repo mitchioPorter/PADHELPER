@@ -39,27 +39,27 @@ class CalculatedDamageViewController: UIViewController {
     var totalDamage: Int = 0
     var recoveryAmount: Int = 0
     
+    var comboMultiplier: Double = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         //here is where the damge is calculated
-        redDamage = rCombo * 1000
-        blueDamage = bCombo * 2000
-        greenDamage = gCombo * 3000
-        lightDamage = lCombo * 4000
-        darkDamage = dCombo * 5000
-        recoveryAmount = hCombo * 1000
-        totalCombo =  rCombo + bCombo + gCombo + lCombo + dCombo + oCombo
+        redDamage *= Int(Double(rCombo) * comboMultiplier)
+        blueDamage *= Int(Double(bCombo) * comboMultiplier)
+        greenDamage *= Int(Double(gCombo) * comboMultiplier)
+        lightDamage *= Int(Double(lCombo) * comboMultiplier)
+        darkDamage *= Int(Double(dCombo) * comboMultiplier)
+        recoveryAmount *= Int(Double(hCombo) * comboMultiplier)
         totalDamage = redDamage + blueDamage + greenDamage + lightDamage + darkDamage
         
-        rDam.text = "\(rCombo) X 1000 Damage = \(redDamage)"
-        bDam.text = "\(gCombo) X 2000 Damage = \(blueDamage)"
-        gDam.text = "\(bCombo) X 3000 Damage = \(greenDamage)"
-        lDam.text = "\(lCombo) X 4000 Damage = \(lightDamage)"
-        dDam.text = "\(dCombo) X 2000 Damage = \(darkDamage)"
-        
-        rAmt.text = "\(hCombo) X 1000 Damage = \(1000*hCombo)"
+        rDam.text = "\(rCombo) combos for \(redDamage)"
+        bDam.text = "\(gCombo) combos for \(blueDamage)"
+        gDam.text = "\(bCombo) combos for \(greenDamage)"
+        lDam.text = "\(lCombo) combos for \(lightDamage)"
+        dDam.text = "\(dCombo) combos for \(darkDamage)"
+        rAmt.text = "\(hCombo) combos for \(recoveryAmount)"
         tDam.text = "\(totalCombo) combos for \(totalDamage)"
     }
 
