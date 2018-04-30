@@ -167,14 +167,29 @@ class DamageCalculator: UIViewController {
                 baseDamageCalculator(mon:mnstr5!)
                 baseDamageCalculator(mon:mnstr6!)
                 
-                calDam.rCombo = Int(RedCombo.text!)!
-                calDam.gCombo = Int(GreenCombo.text!)!
-                calDam.bCombo = Int(BlueCombo.text!)!
-                calDam.lCombo = Int(LightCombo.text!)!
-                calDam.dCombo = Int(DarkCombo.text!)!
-                calDam.hCombo = Int(HeartCombo.text!)!
                 
-                totalCombo = Int(RedCombo.text!)! + Int(GreenCombo.text!)! + Int(BlueCombo.text!)! + Int(LightCombo.text!)! + Int(DarkCombo.text!)! + Int(HeartCombo.text!)! + Int(OtherCombo.text!)!
+                
+                let rCombo:Int = Int(RedCombo.text!)!
+                let gCombo:Int = Int(GreenCombo.text!)!
+                let bCombo:Int = Int(BlueCombo.text!)!
+                let lCombo:Int = Int(LightCombo.text!)!
+                let dCombo:Int = Int(DarkCombo.text!)!
+                let hCombo:Int = Int(HeartCombo.text!)!
+                let oCombo:Int = Int(OtherCombo.text!)!
+                
+                
+                calDam.rCombo = rCombo
+                calDam.gCombo = gCombo
+                calDam.bCombo = bCombo
+                calDam.lCombo = lCombo
+                calDam.dCombo = dCombo
+                calDam.hCombo = hCombo
+                
+                let halfCombo = rCombo + gCombo + bCombo
+                let halfCombo2 = lCombo + dCombo + hCombo + oCombo
+                
+                var totalCombo = halfCombo
+                
                 
                 calculateDamage()
                 calDam.comboMultiplier = comboMultiplier

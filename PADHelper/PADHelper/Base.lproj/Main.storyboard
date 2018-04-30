@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="edH-3q-nxL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="edH-3q-nxL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -124,7 +123,7 @@
                                     <outlet property="name" destination="LWD-wb-lrk" id="ZKx-T7-tWU"/>
                                     <outlet property="rarity" destination="nUu-8M-tXU" id="aBB-WP-vM9"/>
                                     <outlet property="rcv" destination="yE7-vt-ePY" id="JsS-cg-OlH"/>
-                                    <segue destination="kKR-kV-v1j" kind="show" identifier="monsterviewsegue" id="uVM-Eu-Hwd"/>
+                                    <segue destination="kKR-kV-v1j" kind="show" identifier="monsterviewsegue" id="We7-22-nJe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1378,6 +1377,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ruQ-CV-Y3F"/>
+        <segue reference="We7-22-nJe"/>
     </inferredMetricsTieBreakers>
 </document>
