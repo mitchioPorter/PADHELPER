@@ -74,6 +74,20 @@ let base_url:String = "https://www.padherder.com/"
 
 
 
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+
+
 class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
     
     
@@ -141,9 +155,18 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         self.monstertable.rowHeight = 85
         self.monstertable.reloadData()
         
+        self.hideKeyboardWhenTappedAround()
+        
+
+        
         //        fillActiveSkillData()
         //        fillLeaderSkillData()
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
     }
     
     
