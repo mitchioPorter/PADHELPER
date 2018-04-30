@@ -22,6 +22,8 @@
 		789667952072D15100226C21 /* MonsterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789667942072D15100226C21 /* MonsterCell.swift */; };
 		78BC5FDB208E988F008FF96F /* IndividualTeamTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */; };
 		79D1E905E026F9DCD28756EF /* Pods_PADHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB3DD7B60707D7981A37F06F /* Pods_PADHelper.framework */; };
+		A3F95D6020951651007D98BC /* DamageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */; };
+		A3F95D6220951FDA007D98BC /* CalculatedDamageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F95D6120951FDA007D98BC /* CalculatedDamageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +44,8 @@
 		7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseTableViewController.swift; sourceTree = "<group>"; };
 		789667942072D15100226C21 /* MonsterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCell.swift; sourceTree = "<group>"; };
 		78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualTeamTableTableViewController.swift; sourceTree = "<group>"; };
-		A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageCalculator.swift; sourceTree = "<group>"; };
+		A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DamageCalculator.swift; path = ../DamageCalculator/DamageCalculator.swift; sourceTree = "<group>"; };
+		A3F95D6120951FDA007D98BC /* CalculatedDamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatedDamageViewController.swift; sourceTree = "<group>"; };
 		A845CFFA30BBB6660A35B0D0 /* Pods-PADHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PADHelper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PADHelper/Pods-PADHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		DB3DD7B60707D7981A37F06F /* Pods_PADHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PADHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -79,11 +82,13 @@
 		788C1681207D83C500E9183F /* Team List */ = {
 			isa = PBXGroup;
 			children = (
+				A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */,
 				7857BEBF2093C31F005D7151 /* SelectFromMonsterDB.swift */,
 				788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */,
 				788C167D207D70B900E9183F /* TeamCell.swift */,
 				78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */,
 				7857BEC12093D765005D7151 /* MakeTeamTableView.swift */,
+				A3F95D6120951FDA007D98BC /* CalculatedDamageViewController.swift */,
 			);
 			path = "Team List";
 			sourceTree = "<group>";
@@ -125,20 +130,11 @@
 				7896677420719CBD00226C21 /* LaunchScreen.storyboard */,
 				7896677720719CBD00226C21 /* Info.plist */,
 				7896676F20719CBD00226C21 /* PADHelper.xcdatamodeld */,
-				A3A64D8820928BEE009EF4E7 /* DamageCalculator */,
 				7857BEC52093EA9C005D7151 /* Essentials */,
 				7891E26B2072D81D00321E7B /* Monster Database */,
 				788C1681207D83C500E9183F /* Team List */,
 			);
 			path = PADHelper;
-			sourceTree = "<group>";
-		};
-		A3A64D8820928BEE009EF4E7 /* DamageCalculator */ = {
-			isa = PBXGroup;
-			children = (
-				A3A64D8920928C2F009EF4E7 /* DamageCalculator.swift */,
-			);
-			path = DamageCalculator;
 			sourceTree = "<group>";
 		};
 		C8B33FC2FFF8C98CC7D9387D /* Frameworks */ = {
@@ -262,8 +258,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3F95D6220951FDA007D98BC /* CalculatedDamageViewController.swift in Sources */,
 				7857BEC02093C31F005D7151 /* SelectFromMonsterDB.swift in Sources */,
 				788C167E207D70B900E9183F /* TeamCell.swift in Sources */,
+				A3F95D6020951651007D98BC /* DamageCalculator.swift in Sources */,
 				7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */,
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,

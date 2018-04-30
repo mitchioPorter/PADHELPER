@@ -123,5 +123,11 @@ class IndividualTeamTableTableViewController: UITableViewController {
                 monsterDB.slot = 1
             }
         }
+        
+        else if segue.identifier == "toDamSeque" {
+            if let damCalc = segue.destination as? DamageCalculator {
+                 damCalc.teamIDs = teamIDs
+            }
+        }
     }
 }
