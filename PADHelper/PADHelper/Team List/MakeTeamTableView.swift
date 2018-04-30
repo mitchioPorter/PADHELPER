@@ -39,7 +39,6 @@ class MakeTeamTableView: UITableViewController {
         
         self.present(alert, animated: true, completion: nil)
         
-//        addTeam(self.name!)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
