@@ -74,7 +74,16 @@ let base_url:String = "https://www.padherder.com/"
 
 
 
-class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDelegate {
+extension MonsterDatabaseTableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+
+
+class MonsterDatabaseTableViewController: UITableViewController {
     
     var slot:Int?
     
@@ -82,7 +91,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     @IBOutlet var monstertable: UITableView!
     
-    @IBOutlet weak var monstersearch: UISearchBar!
     
     
     // url for PadHerder monster api
@@ -121,11 +129,23 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     var isSearching = false
     
     
+    var monstersearch:UISearchController!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        monstersearch.delegate = self
-        monstersearch.returnKeyType = UIReturnKeyType.done
+        
+        monstersearch = UISearchController(searchResultsController: nil)
+        
+        monstertable.tableHeaderView = monstersearch.searchBar
+        
+        monstersearch.searchResultsUpdater = self
+        monstersearch.obscuresBackgroundDuringPresentation = false
+        monstersearch.searchBar.placeholder = "Search Monsters"
+        navigationItem.searchController = monstersearch
+        self.definesPresentationContext = true
+        
         self.title = "Monster Database"
         
         self.refreshControl = UIRefreshControl()
@@ -145,9 +165,9 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true;
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.monstersearch.isActive = false
     }
     
     
@@ -163,7 +183,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isSearching) {
+        if (isFiltering()) {
             return filteredMonsters.count
         }
         return api_monster_list.count
@@ -173,37 +193,39 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
         
         
-        if (isSearching) {
+        if (isFiltering()) {
+      
             let currentMonster:Monster = filteredMonsters[indexPath.row]
-            
+
             cell.name.text = currentMonster.name!
             cell.id.text = String(currentMonster.id!)
             cell.rarity.text = String(currentMonster.rarity!) + "*"
             cell.hp.text = String(currentMonster.hp_max!)
             cell.atk.text = String(currentMonster.atk_max!)
             cell.rcv.text = String(currentMonster.rcv_max!)
-            
+
             let url = URL(string: base_url + currentMonster.image40_href!)
-            
+
             cell.img.kf.setImage(with: url)
+        
         }
-            
         else {
-            
+
             let currentMonster:Monster = api_monster_list[indexPath.row]
-            
+
             cell.name.text = currentMonster.name!
             cell.id.text = String(currentMonster.id!)
             cell.rarity.text = String(currentMonster.rarity!) + "*"
             cell.hp.text = String(currentMonster.hp_max!)
             cell.atk.text = String(currentMonster.atk_max!)
             cell.rcv.text = String(currentMonster.rcv_max!)
-            
+
             let url = URL(string: base_url + currentMonster.image40_href!)
-            
+
             cell.img.kf.setImage(with: url)
-            
+
         }
+
         
         return cell
     }
@@ -216,7 +238,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
                 // Get the current table entry's index
                 let index = self.tableView.indexPathForSelectedRow?.row
                 var monster:Monster
-                if (isSearching) {
+                if (isFiltering()) {
                     monster = filteredMonsters[index!]
                 }
                 else {
@@ -228,6 +250,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
             }
         }
     }
+
     
     
     
@@ -333,20 +356,27 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
     
     
     // ADDED METHODS FOR UI FUNCTION
+
     
+ 
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if (searchBar.text == nil || searchBar.text == "") {
-            isSearching = false
-            view.endEditing(true)
-            monstertable.reloadData()
-        }
-            
-        else {
-            isSearching = true
-            filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchBar.text!.lowercased()) || $0.id! == Int(searchBar.text!)})
-            monstertable.reloadData()
-        }
+    // SEARCH CONTROLLER FUNCTIONS
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return monstersearch.searchBar.text?.isEmpty ?? true
+    }
+   
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        
+        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased())})
+ 
+        monstertable.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return monstersearch.isActive && !searchBarIsEmpty()
     }
     
     
@@ -357,4 +387,5 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchBarDele
         refreshControl?.endRefreshing()
         self.monstertable.reloadData()
     }
+    
 }
