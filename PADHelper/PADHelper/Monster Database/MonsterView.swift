@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import Kingfisher
 
 class MonsterView: UIViewController {
 
@@ -36,7 +38,12 @@ class MonsterView: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Monster View"
+        self.navigationItem.title = "Favorites"
+        
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(addFavorites))
+        navigationItem.rightBarButtonItem = button
+        
+        
         loadLabels()
         
     }
@@ -44,6 +51,46 @@ class MonsterView: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func addFavorites() {
+        var exists = false
+        
+
+        if favorites.count != 0 {
+            
+            for item in favorites {
+                let fav = item as! Favorite
+                let favID:Int = Int(fav.fave)
+                if favID == mnstr!.id! {
+                    exists = true
+                }
+            }
+        }
+
+        
+        if !exists {
+            addFavorite()
+            let alert = UIAlertController(title: "Favorite", message: "This monster has been added to Favorites!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            self.tabBarController?.viewControllers![2].viewWillAppear(true)
+        }
+    }
+    
+    private func addFavorite() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Favorite", in: managedContext)!
+        let item = NSManagedObject(entity: entity, insertInto: managedContext)
+        item.setValue(mnstr!.id!, forKey: "fave")
+        do {
+            try managedContext.save()
+        } catch let err as NSError {
+            print("Failed to save candidate.", err)
+        }
+        
+        super.tabBarController?.viewControllers![1].viewWillAppear(true)
     }
     
     private func loadLabels() {

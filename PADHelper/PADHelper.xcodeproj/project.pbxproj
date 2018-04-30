@@ -10,6 +10,7 @@
 		7857BEC02093C31F005D7151 /* SelectFromMonsterDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEBF2093C31F005D7151 /* SelectFromMonsterDB.swift */; };
 		7857BEC22093D765005D7151 /* MakeTeamTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC12093D765005D7151 /* MakeTeamTableView.swift */; };
 		7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC32093EA28005D7151 /* SettingsViewController.swift */; };
+		7876831320972CB600176FB6 /* FavoritesTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876831220972CB600176FB6 /* FavoritesTableTableViewController.swift */; };
 		788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */; };
 		788C167E207D70B900E9183F /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167D207D70B900E9183F /* TeamCell.swift */; };
 		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
@@ -31,6 +32,7 @@
 		7857BEBF2093C31F005D7151 /* SelectFromMonsterDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFromMonsterDB.swift; sourceTree = "<group>"; };
 		7857BEC12093D765005D7151 /* MakeTeamTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeTeamTableView.swift; sourceTree = "<group>"; };
 		7857BEC32093EA28005D7151 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7876831220972CB600176FB6 /* FavoritesTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableTableViewController.swift; sourceTree = "<group>"; };
 		788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListTableViewController.swift; sourceTree = "<group>"; };
 		788C167D207D70B900E9183F /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				7896677D20719EA200226C21 /* MonsterDatabaseTableViewController.swift */,
 				789667942072D15100226C21 /* MonsterCell.swift */,
 				7891E26C2072D84F00321E7B /* MonsterView.swift */,
+				7876831220972CB600176FB6 /* FavoritesTableTableViewController.swift */,
 			);
 			path = "Monster Database";
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */,
 				7857BEC22093D765005D7151 /* MakeTeamTableView.swift in Sources */,
 				7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */,
+				7876831320972CB600176FB6 /* FavoritesTableTableViewController.swift in Sources */,
 				78BC5FDB208E988F008FF96F /* IndividualTeamTableTableViewController.swift in Sources */,
 				7896677120719CBD00226C21 /* PADHelper.xcdatamodeld in Sources */,
 				7896677E20719EA200226C21 /* MonsterDatabaseTableViewController.swift in Sources */,

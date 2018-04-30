@@ -15,9 +15,31 @@ class MakeTeamTableView: UITableViewController {
     
     var newTeam:[Monster] = [api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0], api_monster_list[0]]
     
+    var name:String?
+    
     @IBAction func addTeam(_ sender: Any) {
-        addCandidate()
-        self.navigationController!.popViewController(animated: true)
+
+        
+        let alert = UIAlertController(title: "New Team", message: "Enter a name for this team", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField(configurationHandler: {(textField) in
+            textField.placeholder = "Name"
+        })
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { (action) in
+            
+            if alert.textFields![0].text == nil {
+                self.name = ""
+            }
+            else {
+                self.name = alert.textFields![0].text
+            }
+            self.addTeam(name: self.name!)
+            self.navigationController!.popViewController(animated: true)
+
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+//        addTeam(self.name!)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +49,8 @@ class MakeTeamTableView: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        teamtable.rowHeight = 100
+        self.definesPresentationContext = true
+        teamtable.rowHeight = 85
         teamtable.reloadData()
     }
 
@@ -131,7 +153,7 @@ class MakeTeamTableView: UITableViewController {
         }
     }
 
-    func addCandidate() {
+    func addTeam(name:String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Team", in: managedContext)!
@@ -142,7 +164,7 @@ class MakeTeamTableView: UITableViewController {
         item.setValue(Int(newTeam[3].id!), forKey: "monster4")
         item.setValue(Int(newTeam[4].id!), forKey: "monster5")
         item.setValue(Int(newTeam[5].id!), forKey: "monster6")
-        item.setValue("Team", forKey: "name")
+        item.setValue(name, forKey: "name")
         
         do {
             try managedContext.save()
