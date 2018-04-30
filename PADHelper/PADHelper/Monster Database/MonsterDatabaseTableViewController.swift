@@ -57,17 +57,8 @@ struct Leader_Skill: Decodable {
 // array of Monster objects pulled from the API
 var api_monster_list:[Monster] = []
 
-// array of uiimages to cache the monster images
-
-var img40:[UIImage] = []
-
-var img60:[UIImage] = []
-
-
-
 
 /// URLS
-
 
 // PadHerder url for getting images
 let base_url:String = "https://www.padherder.com/"
@@ -83,7 +74,7 @@ extension MonsterDatabaseTableViewController: UISearchResultsUpdating {
 
 
 
-class MonsterDatabaseTableViewController: UITableViewController {
+class MonsterDatabaseTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
     
     var slot:Int?
     
@@ -132,37 +123,60 @@ class MonsterDatabaseTableViewController: UITableViewController {
     var monstersearch:UISearchController!
     
     
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Monster Database"
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.frame = view.bounds
+
+        setupView()
+       
+        fillMonsterData()
+
+        self.monstertable.reloadData()
+
+        
+        //        fillActiveSkillData()
+        //        fillLeaderSkillData()
+        
+    }
+    
+    private func setupView() {
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = monstersearch
+        } else {
+            tableView.tableHeaderView = monstersearch.searchBar
+        }
         
         monstersearch = UISearchController(searchResultsController: nil)
-        
-        monstertable.tableHeaderView = monstersearch.searchBar
         
         monstersearch.searchResultsUpdater = self
         monstersearch.obscuresBackgroundDuringPresentation = false
         monstersearch.searchBar.placeholder = "Search Monsters"
         navigationItem.searchController = monstersearch
+        monstersearch.isActive = true
+        monstersearch.hidesNavigationBarDuringPresentation = false
         self.definesPresentationContext = true
+        self.monstersearch.delegate = self
+        self.monstersearch.searchBar.delegate = self
+        self.extendedLayoutIncludesOpaqueBars = true
         
-        self.title = "Monster Database"
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(refreshControl!) // not required when using UITableViewController
         
-        fillMonsterData()
+        
         
         self.monstertable.rowHeight = 85
-        self.monstertable.reloadData()
-        
-
-        
-        //        fillActiveSkillData()
-        //        fillLeaderSkillData()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -280,6 +294,8 @@ class MonsterDatabaseTableViewController: UITableViewController {
         // load the url
         guard let url = URL(string: monster_api_url) else { return }
         
+        activityIndicator.startAnimating()
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!.localizedDescription)
@@ -293,6 +309,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
                 // Get back to the main queue
                 DispatchQueue.main.async {
                     api_monster_list = monsterData
+                    self.activityIndicator.stopAnimating()
                     self.monstertable.reloadData()
                 }
             } catch let jsonError {
@@ -382,7 +399,7 @@ class MonsterDatabaseTableViewController: UITableViewController {
     
     @objc func refresh() {
         // Code to refresh table view
-        api_monster_list = []
+        
         fillMonsterData()
         refreshControl?.endRefreshing()
         self.monstertable.reloadData()
