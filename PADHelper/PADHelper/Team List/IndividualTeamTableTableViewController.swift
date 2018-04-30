@@ -20,6 +20,9 @@ class IndividualTeamTableTableViewController: UITableViewController {
         super.viewDidLoad()
         getIDs()
         
+        teamView.rowHeight = 85
+        teamView.reloadData()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -56,14 +59,24 @@ class IndividualTeamTableTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "teammonstercell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
 
-        // Configure the cell...
-        let index = indexPath.row
+        let id = teamIDs[indexPath.row]
         
-        let mnstr = api_monster_list.filter({$0.id! == Int(teamIDs[index])})[0]
-        cell.textLabel?.text = mnstr.name!
-        cell.detailTextLabel?.text = String(mnstr.id!)
+        let currentMonster:Monster = api_monster_list.filter({$0.id! == Int(id)})[0]
+        
+        cell.name.text = currentMonster.name!
+        cell.name.isHidden = false
+        
+        cell.id.text = String(currentMonster.id!)
+        cell.rarity.text = String(currentMonster.rarity!) + "*"
+        cell.hp.text = String(currentMonster.hp_max!)
+        cell.atk.text = String(currentMonster.atk_max!)
+        cell.rcv.text = String(currentMonster.rcv_max!)
+        
+        let url = URL(string: base_url + currentMonster.image40_href!)
+        
+        cell.img.kf.setImage(with: url)
 
         return cell
     }

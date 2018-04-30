@@ -50,7 +50,10 @@ struct Active_Skill: Decodable {
 
 
 struct Leader_Skill {
-    var data:[Double]
+    var hp_mult:Double?
+    var atk_mult:Double?
+    var rcv_mult:Double?
+    var types:[Double]?
     var name:String?
     var effect:String?
 }
@@ -166,6 +169,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
         
         fillMonsterData()
         fillLeaderSkillData()
+        fillActiveSkillData()
         self.monstertable.reloadData()
         
         //        fillActiveSkillData()
@@ -344,29 +348,19 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     }
     
     private func fillActiveSkillData() {
-        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
-        // load the url
-        guard let url = URL(string: active_skill_api_url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            guard let data = data else { return }
-            // Implement JSON decoding and parsing
-            do {
-                // Decode retrived data with JSONDecoder and assing type of Article object
-                let monsterData = try JSONDecoder().decode([Active_Skill].self, from: data)
-                
-                // Get back to the main queue
-                DispatchQueue.main.async {
-                    api_active_skill_list = monsterData
-                    self.monstertable.reloadData()
+        let url = active_skill_api_url
+        Alamofire.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                for i in 0...json.count {
+                    let a_skill = Active_Skill(min_cooldown: Int(json[i]["min_cooldown"].stringValue), max_cooldwown: Int(json[0]["max_cooldown"].stringValue), name: json[i]["name"].stringValue, effect: json[i]["effect"].stringValue)                    
+                    api_active_skill_list.append(a_skill)
                 }
-            } catch let jsonError {
-                print(jsonError)
+            case .failure(let error):
+                print(error)
             }
-            }.resume()
+        }
     }
     
     private func fillLeaderSkillData() {
@@ -377,8 +371,13 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
                 let json = JSON(value)
                 for i in 0...json.count {
                     
-                    var l_skill:Leader_Skill = Leader_Skill(data: [], name: json[i]["name"].stringValue, effect: nil)
-                    l_skill.effect = json[i]["effect"].stringValue
+                    var l_skill:Leader_Skill = Leader_Skill(hp_mult: 0, atk_mult: 0, rcv_mult: 0, types: [], name: json[i]["name"].stringValue, effect: json[i]["effect"].stringValue)
+                    if json[i]["data"] != JSON.null {
+                        l_skill.hp_mult = Double(json[i]["data"][0].stringValue)
+                        l_skill.atk_mult = Double(json[i]["data"][1].stringValue)
+                        l_skill.rcv_mult = Double(json[i]["data"][2].stringValue)
+                    }
+                    
                     api_leader_skill_list.append(l_skill)
                 }
             case .failure(let error):
