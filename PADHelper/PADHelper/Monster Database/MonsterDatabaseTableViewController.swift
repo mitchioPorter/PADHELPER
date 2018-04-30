@@ -10,6 +10,8 @@ import UIKit
 import Foundation
 import CoreData
 import Kingfisher
+import SwiftyJSON
+import Alamofire
 
 
 // Struct to represent each monster found in the PADHerder api
@@ -47,15 +49,51 @@ struct Active_Skill: Decodable {
 }
 
 
-struct Leader_Skill: Decodable {
-    var data:[Int]?
+struct Leader_Skill {
+    var data:[Double]
     var name:String?
     var effect:String?
+}
+
+func getType(type:Int) -> String {
+    switch type {
+    case 0:
+        return "Evo Material"
+    case 1:
+        return "Balanced"
+    case 2:
+        return "Physical"
+    case 3:
+        return "Healer"
+    case 4:
+        return "Dragon"
+    case 5:
+        return "God"
+    case 6:
+        return "Attacker"
+    case 7:
+        return "Devil"
+    case 12:
+        return "Awoken Skill Material"
+    case 13:
+        return "Protected"
+    case 14:
+        return "Enhance Material"
+    default:
+        return "None"
+    }
 }
 
 
 // array of Monster objects pulled from the API
 var api_monster_list:[Monster] = []
+
+// array of leader skills pulled from the API
+var api_leader_skill_list:[Leader_Skill] = []
+
+// array of active skills pulled from the API
+var api_active_skill_list:[Active_Skill] = []
+
 
 
 /// URLS
@@ -79,7 +117,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     var slot:Int?
     
     
-    
     @IBOutlet var monstertable: UITableView!
     
     
@@ -96,14 +133,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     // url for PadHerder awakening api
     let awakening_api_url:String = "https://www.padherder.com/api/awakenings/"
 
-    // ARRAYS FOR API DATA
-    
-    
-    // array of leader skills pulled from the API
-    var api_leader_skill_list:[Leader_Skill] = []
-    
-    // array of active skills pulled from the API
-    var api_active_skill_list:[Active_Skill] = []
+
     
     
     // list of monsters converted to monster objects
@@ -115,9 +145,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     
     // array of filtered monsters for the search bar
     var filteredMonsters:[Monster] = []
-    
-    // a bool to tell when searching
-    var isSearching = false
     
     
     var monstersearch:UISearchController!
@@ -136,11 +163,10 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
         activityIndicator.frame = view.bounds
 
         setupView()
-       
+        
         fillMonsterData()
-
+        fillLeaderSkillData()
         self.monstertable.reloadData()
-
         
         //        fillActiveSkillData()
         //        fillLeaderSkillData()
@@ -210,7 +236,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
         if (isFiltering()) {
       
             let currentMonster:Monster = filteredMonsters[indexPath.row]
-
             cell.name.text = currentMonster.name!
             cell.id.text = String(currentMonster.id!)
             cell.rarity.text = String(currentMonster.rarity!) + "*"
@@ -335,7 +360,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
                 
                 // Get back to the main queue
                 DispatchQueue.main.async {
-                    self.api_active_skill_list = monsterData
+                    api_active_skill_list = monsterData
                     self.monstertable.reloadData()
                 }
             } catch let jsonError {
@@ -345,31 +370,22 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     }
     
     private func fillLeaderSkillData() {
-        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
-        // load the url
-        guard let url = URL(string: leader_skill_api_url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            guard let data = data else { return }
-            // Implement JSON decoding and parsing
-            do {
-                // Decode retrived data with JSONDecoder and assing type of Article object
-                let monsterData = try JSONDecoder().decode([Leader_Skill].self, from: data)
-                
-                // Get back to the main queue
-                DispatchQueue.main.async {
-                    self.api_leader_skill_list = monsterData
-                    self.monstertable.reloadData()
+        let url = leader_skill_api_url
+        Alamofire.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                for i in 0...json.count {
+                    
+                    var l_skill:Leader_Skill = Leader_Skill(data: [], name: json[i]["name"].stringValue, effect: nil)
+                    l_skill.effect = json[i]["effect"].stringValue
+                    api_leader_skill_list.append(l_skill)
                 }
-            } catch let jsonError {
-                print(jsonError)
+            case .failure(let error):
+                print(error)
             }
-            }.resume()
+        }
     }
-    
     
     
     // ADDED METHODS FOR UI FUNCTION

@@ -12,7 +12,15 @@ import CoreData
 import Kingfisher
 
 
-class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
+extension SelectFromMonsterDB {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+class SelectFromMonsterDB: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+    
     
     
     
@@ -24,15 +32,14 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var monstertable: UITableView!
     
-    @IBOutlet weak var monstersearch: UISearchBar!
+    var monstersearch:UISearchController!
     
     // DATABASE SEARCHING VARS
     
     // array of filtered monsters for the search bar
     var filteredMonsters:[Monster] = []
     
-    // a bool to tell when searching
-    var isSearching = false
+
 
     
     
@@ -43,21 +50,36 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        monstersearch.delegate = self
-        monstersearch.returnKeyType = UIReturnKeyType.done
-        self.title = "Monster Database"
-
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
-        self.tableView.addSubview(refreshControl!) // not required when using UITableViewController
-        
-        
-        self.monstertable.rowHeight = 85
+        setupView()
         self.monstertable.reloadData()
 
     }
+    
 
+    private func setupView() {
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = monstersearch
+        } else {
+            tableView.tableHeaderView = monstersearch.searchBar
+        }
+        
+        monstersearch = UISearchController(searchResultsController: nil)
+        
+        monstersearch.isActive = true
+        monstersearch.searchResultsUpdater = self
+        monstersearch.obscuresBackgroundDuringPresentation = false
+        monstersearch.searchBar.placeholder = "Search Monsters"
+        navigationItem.searchController = monstersearch
+        monstersearch.hidesNavigationBarDuringPresentation = true
+        monstersearch.definesPresentationContext = true
+        self.monstersearch.delegate = self
+        self.monstersearch.searchBar.delegate = self
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.monstertable.rowHeight = 85
+    }
+
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -71,7 +93,7 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isSearching) {
+        if (isFiltering()) {
             return filteredMonsters.count
         }
         return api_monster_list.count
@@ -81,7 +103,7 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "monstercell", for: indexPath) as! MonsterCell
         
         
-        if (isSearching) {
+        if (isFiltering()) {
             let currentMonster:Monster = filteredMonsters[indexPath.row]
             
             cell.name.text = currentMonster.name!
@@ -122,7 +144,7 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
         if segue.identifier == "sendtoadd" {
             let index = monstertable.indexPathForSelectedRow?.row
             let mnstr:Monster?
-            if isSearching {
+            if isFiltering() {
                 mnstr = filteredMonsters[index!]
             }
             else {
@@ -136,55 +158,21 @@ class SelectFromMonsterDB: UITableViewController, UISearchBarDelegate {
     
     
     
-    // ADDED METHODS FOR UI FUNCTION
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return monstersearch.searchBar.text?.isEmpty ?? true
+    }
     
-    private func fillMonsterData() {
-        // Source: https://mrgott.com/swift-programing/33-rest-api-in-swift-4-using-urlsession-and-jsondecode
-        // load the url
-        guard let url = URL(string: monster_api_url) else { return }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            guard let data = data else { return }
-            // Implement JSON decoding and parsing
-            do {
-                // Decode retrived data with JSONDecoder and assing type of Article object
-                let monsterData = try JSONDecoder().decode([Monster].self, from: data)
-                
-                // Get back to the main queue
-                DispatchQueue.main.async {
-                    api_monster_list = monsterData
-                    self.monstertable.reloadData()
-                }
-            } catch let jsonError {
-                print(jsonError)
-            }
-            }.resume()
+        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased())})
+        
+        monstertable.reloadData()
     }
     
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if (searchBar.text == nil || searchBar.text == "") {
-            isSearching = false
-            view.endEditing(true)
-            monstertable.reloadData()
-        }
-            
-        else {
-            isSearching = true
-            filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchBar.text!.lowercased()) || $0.id! == Int(searchBar.text!)})
-            monstertable.reloadData()
-        }
+    func isFiltering() -> Bool {
+        return monstersearch.isActive && !searchBarIsEmpty()
     }
     
-    
-    @objc func refresh() {
-        // Code to refresh table view
-        api_monster_list = []
-        fillMonsterData()
-        refreshControl?.endRefreshing()
-        self.monstertable.reloadData()
-    }
 }
