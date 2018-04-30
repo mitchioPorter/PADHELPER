@@ -63,7 +63,7 @@ class IndividualTeamTableTableViewController: UITableViewController {
 
         let id = teamIDs[indexPath.row]
         
-        let currentMonster:Monster = api_monster_list.filter({$0.id! == Int(id)})[0]
+        let currentMonster:Monster = getMonster(id: Int(id))
         
         cell.name.text = currentMonster.name!
         cell.name.isHidden = false
@@ -124,16 +124,10 @@ class IndividualTeamTableTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "monstersegue" {
+        if segue.identifier == "monsterview" {
             if let monsterView = segue.destination as? MonsterView {
                 let index = self.teamView.indexPathForSelectedRow?.row
                 monsterView.m_id = Int(teamIDs[index!])
-            }
-        }
-        
-        else if segue.identifier == "monster1" {
-            if let monsterDB = segue.destination as? MonsterDatabaseTableViewController {
-                monsterDB.slot = 1
             }
         }
         

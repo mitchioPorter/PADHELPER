@@ -67,19 +67,19 @@ class DamageCalculator: UIViewController {
         
         // this sets the leader skills and stuff
         //Monster1Name
-        mnstr1 = api_monster_list.filter({$0.id! == Int(teamIDs[0])})[0]
-        mnstr2 = api_monster_list.filter({$0.id! == Int(teamIDs[5])})[0]
+        mnstr1 = getMonster(id: Int(teamIDs[0]))
+        mnstr2 = getMonster(id: Int(teamIDs[1]))
         //side hos
-        mnstr3 = api_monster_list.filter({$0.id! == Int(teamIDs[1])})[0]
-        mnstr4 = api_monster_list.filter({$0.id! == Int(teamIDs[2])})[0]
-        mnstr5 = api_monster_list.filter({$0.id! == Int(teamIDs[3])})[0]
-        mnstr6 = api_monster_list.filter({$0.id! == Int(teamIDs[4])})[0]
+        mnstr3 = getMonster(id: Int(teamIDs[2]))
+        mnstr4 = getMonster(id: Int(teamIDs[3]))
+        mnstr5 = getMonster(id: Int(teamIDs[4]))
+        mnstr6 = getMonster(id: Int(teamIDs[5]))
         
-        print("\(mnstr1?.element ?? 100)")
-        print("\(mnstr2?.element ?? 100)")
-        print("\(mnstr3?.element ?? 100)")
-        print("\(mnstr4?.element ?? 100)")
-        print("\(mnstr5?.element ?? 100)")
+//        print("\(mnstr1?.element ?? 100)")
+//        print("\(mnstr2?.element ?? 100)")
+//        print("\(mnstr3?.element ?? 100)")
+//        print("\(mnstr4?.element ?? 100)")
+//        print("\(mnstr5?.element ?? 100)")
 
         
         Monster1Name.text! = mnstr1!.name!
@@ -188,7 +188,7 @@ class DamageCalculator: UIViewController {
                 let halfCombo = rCombo + gCombo + bCombo
                 let halfCombo2 = lCombo + dCombo + hCombo + oCombo
                 
-                var totalCombo = halfCombo
+                var totalCombo = halfCombo + halfCombo2
                 
                 
                 calculateDamage()

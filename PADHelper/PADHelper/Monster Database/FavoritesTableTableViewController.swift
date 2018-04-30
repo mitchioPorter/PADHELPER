@@ -71,7 +71,7 @@ class FavoritesTableTableViewController: UITableViewController {
         
         let favorite = favorites[indexPath.row] as! Favorite
         
-        let currentMonster:Monster = api_monster_list.filter({$0.id! == Int(favorite.fave)})[0]
+        let currentMonster:Monster = getMonster(id: Int(favorite.fave))
         cell.name.text = currentMonster.name!
         cell.id.text = String(currentMonster.id!)
         cell.rarity.text = String(currentMonster.rarity!) + "*"
@@ -121,14 +121,23 @@ class FavoritesTableTableViewController: UITableViewController {
      }
      */
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "monsterview" {
+            if let vc = segue.destination as? MonsterView {
+                let index = self.favoriteView.indexPathForSelectedRow?.row
+                let fav = favorites[index!] as! Favorite
+                let id = Int(fav.fave)
+                vc.m_id = id
+            }
+        }
      }
-     */
+ 
     
 }

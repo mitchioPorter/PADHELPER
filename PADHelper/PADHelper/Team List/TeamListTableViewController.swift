@@ -74,13 +74,12 @@ class TeamListTableViewController: UITableViewController {
         let id6 = Int(team.monster6)
 
         
-        let monsters = api_monster_list.filter({$0.id! == id || $0.id! == id2 || $0.id! == id3 || $0.id! == id4 || $0.id! == id5 || $0.id! == id6})
-        let m_1 = monsters.filter({$0.id! == id})[0]
-        let m_2 = monsters.filter({$0.id! == id2})[0]
-        let m_3 = monsters.filter({$0.id! == id3})[0]
-        let m_4 = monsters.filter({$0.id! == id4})[0]
-        let m_5 = monsters.filter({$0.id! == id5})[0]
-        let m_6 = monsters.filter({$0.id! == id6})[0]
+        let m_1 = getMonster(id: id)
+        let m_2 = getMonster(id: id2)
+        let m_3 = getMonster(id: id3)
+        let m_4 = getMonster(id: id4)
+        let m_5 = getMonster(id: id5)
+        let m_6 = getMonster(id: id6)
 
         
         

@@ -87,6 +87,10 @@ func getType(type:Int) -> String {
     }
 }
 
+func getMonster(id:Int) -> Monster {
+    return api_monster_list.filter({$0.id! == id})[0]
+}
+
 
 // array of Monster objects pulled from the API
 var api_monster_list:[Monster] = []
@@ -402,7 +406,7 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         
-        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased())})
+        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased()) || $0.id! == Int(searchText)})
  
         monstertable.reloadData()
     }

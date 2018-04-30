@@ -99,7 +99,7 @@ class MonsterView: UIViewController {
     }
     
     private func loadLabels() {
-        mnstr = api_monster_list.filter({$0.id! == Int(m_id!)})[0]
+        mnstr = getMonster(id: Int(m_id!))
         
         name.text! = mnstr!.name!
         id.text = String(mnstr!.id!)

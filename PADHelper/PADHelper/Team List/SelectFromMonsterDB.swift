@@ -166,7 +166,7 @@ class SelectFromMonsterDB: UITableViewController, UISearchResultsUpdating, UISea
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         
-        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased())})
+        filteredMonsters = api_monster_list.filter({$0.name!.lowercased().contains(searchText.lowercased()) || $0.id! == Int(searchText)})
         
         monstertable.reloadData()
     }
