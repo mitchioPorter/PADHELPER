@@ -24,11 +24,15 @@ class TeamListTableViewController: UITableViewController {
         self.title = "Team List"
 
         self.teamlistview.rowHeight = 100
+        
+
         self.teamlistview.reloadData()
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+
     
     override func viewWillAppear(_ animated: Bool) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
@@ -165,5 +169,6 @@ class TeamListTableViewController: UITableViewController {
                 teamView.team = team
             }
         }
+
     }
 }

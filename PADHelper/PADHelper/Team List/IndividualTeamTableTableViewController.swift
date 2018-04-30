@@ -21,6 +21,9 @@ class IndividualTeamTableTableViewController: UITableViewController {
         getIDs()
         
         teamView.rowHeight = 85
+        
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(seeStats))
+        navigationItem.rightBarButtonItem = button
         teamView.reloadData()
         
 
@@ -29,6 +32,10 @@ class IndividualTeamTableTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    @objc func seeStats() {
+        performSegue(withIdentifier: "statsegue", sender: self)
     }
     
     private func getIDs() {
@@ -134,6 +141,11 @@ class IndividualTeamTableTableViewController: UITableViewController {
         else if segue.identifier == "toDamSeque" {
             if let damCalc = segue.destination as? DamageCalculator {
                  damCalc.teamIDs = teamIDs
+            }
+        }
+        else if segue.identifier == "statsegue" {
+            if let statVC = segue.destination as? TeamStatsTableViewController {
+                statVC.ids = self.teamIDs
             }
         }
     }

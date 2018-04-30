@@ -11,6 +11,7 @@
 		7857BEC22093D765005D7151 /* MakeTeamTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC12093D765005D7151 /* MakeTeamTableView.swift */; };
 		7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857BEC32093EA28005D7151 /* SettingsViewController.swift */; };
 		7876831320972CB600176FB6 /* FavoritesTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876831220972CB600176FB6 /* FavoritesTableTableViewController.swift */; };
+		787683152097957F00176FB6 /* TeamStatsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787683142097957F00176FB6 /* TeamStatsTableViewController.swift */; };
 		788C1678207D4BBB00E9183F /* TeamListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */; };
 		788C167E207D70B900E9183F /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788C167D207D70B900E9183F /* TeamCell.swift */; };
 		7891E26D2072D84F00321E7B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891E26C2072D84F00321E7B /* MonsterView.swift */; };
@@ -33,6 +34,7 @@
 		7857BEC12093D765005D7151 /* MakeTeamTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeTeamTableView.swift; sourceTree = "<group>"; };
 		7857BEC32093EA28005D7151 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7876831220972CB600176FB6 /* FavoritesTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableTableViewController.swift; sourceTree = "<group>"; };
+		787683142097957F00176FB6 /* TeamStatsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatsTableViewController.swift; sourceTree = "<group>"; };
 		788C1677207D4BBB00E9183F /* TeamListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListTableViewController.swift; sourceTree = "<group>"; };
 		788C167D207D70B900E9183F /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		7891E26C2072D84F00321E7B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				78BC5FDA208E988F008FF96F /* IndividualTeamTableTableViewController.swift */,
 				7857BEC12093D765005D7151 /* MakeTeamTableView.swift */,
 				A3F95D6120951FDA007D98BC /* CalculatedDamageViewController.swift */,
+				787683142097957F00176FB6 /* TeamStatsTableViewController.swift */,
 			);
 			path = "Team List";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				7857BEC02093C31F005D7151 /* SelectFromMonsterDB.swift in Sources */,
 				788C167E207D70B900E9183F /* TeamCell.swift in Sources */,
 				A3F95D6020951651007D98BC /* DamageCalculator.swift in Sources */,
+				787683152097957F00176FB6 /* TeamStatsTableViewController.swift in Sources */,
 				7857BEC42093EA28005D7151 /* SettingsViewController.swift in Sources */,
 				789667952072D15100226C21 /* MonsterCell.swift in Sources */,
 				7896676920719CBD00226C21 /* AppDelegate.swift in Sources */,
