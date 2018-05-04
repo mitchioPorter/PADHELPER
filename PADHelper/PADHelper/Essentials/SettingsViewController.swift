@@ -32,6 +32,9 @@ class SettingsViewController: UIViewController {
         } catch {
             print ("There was an error")
         }
+        
+        self.tabBarController?.viewControllers![1].viewWillAppear(true)
+        self.tabBarController?.viewControllers![1].viewDidLoad()
     }
     
     private func deleteFavorites() {
@@ -47,6 +50,8 @@ class SettingsViewController: UIViewController {
         } catch {
             print ("There was an error")
         }
+        
+        self.tabBarController?.viewControllers![2].viewWillAppear(true)
     }
     
     override func viewDidLoad() {

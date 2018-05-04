@@ -125,6 +125,10 @@ class DamageCalculator: UIViewController {
        
         
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -188,7 +192,7 @@ class DamageCalculator: UIViewController {
                 let halfCombo = rCombo + gCombo + bCombo
                 let halfCombo2 = lCombo + dCombo + hCombo + oCombo
                 
-                var totalCombo = halfCombo + halfCombo2
+                let totalCombo = halfCombo + halfCombo2
                 
                 
                 calculateDamage()
@@ -283,6 +287,11 @@ class DamageCalculator: UIViewController {
         }
         
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
     }
 
 }

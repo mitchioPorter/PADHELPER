@@ -13,7 +13,7 @@ class TeamStatsTableViewController: UITableViewController {
     @IBOutlet var statTable: UITableView!
     
     var ids:[Int64]?
-    var elementDmg = [0,0,0,0,0]
+    var elementDmg = [0,0,0,0,0,0,0,0,0]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +21,10 @@ class TeamStatsTableViewController: UITableViewController {
         
         
         calcStats()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         statTable.reloadData()
@@ -39,6 +39,27 @@ class TeamStatsTableViewController: UITableViewController {
             mnstrs.append(getMonster(id: idINT))
         }
         
+        calcAtk(mnstrs)
+        calcHP(mnstrs)
+        
+    }
+    
+    private func calcHP(_ mnstrs:[Monster]) {
+        for mnstr in mnstrs {
+            elementDmg[5] += mnstr.hp_max!
+            elementDmg[5] += 990
+            
+            elementDmg[6] += mnstr.rcv_max!
+            elementDmg[6] += 297
+            
+            elementDmg[7] += mnstr.rarity!
+            elementDmg[8] += mnstr.team_cost!
+        }
+    }
+    
+    private func calcAtk(_ mnstrs:[Monster]) {
+        
+        
         for mnstr in mnstrs {
             
             let element = mnstr.element!
@@ -51,7 +72,7 @@ class TeamStatsTableViewController: UITableViewController {
                 element2 = -1
             }
             
-            let atk = mnstr.atk_max!
+            let atk = mnstr.atk_max! + 495
             let atksub = atk/10
             let atksubdiff = atksub*3
             
@@ -71,7 +92,6 @@ class TeamStatsTableViewController: UITableViewController {
                 elementDmg[4] += atk
             }
             
-            
             if element2 == 0 {
                 if element2 == element {
                     elementDmg[0] += atksub
@@ -80,7 +100,7 @@ class TeamStatsTableViewController: UITableViewController {
                     elementDmg[0] += atksubdiff
                 }
             }
-            
+                
             else if element2 == 1 {
                 if element2 == element {
                     elementDmg[1] += atksub
@@ -116,26 +136,25 @@ class TeamStatsTableViewController: UITableViewController {
                 
             }
         }
-        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return elementDmg.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "statcell", for: indexPath)
@@ -143,71 +162,87 @@ class TeamStatsTableViewController: UITableViewController {
         
         let dmg = elementDmg[index]
         
-        if index == 0 {
-            cell.textLabel?.text = "Red Damage"
-        }
-        else if index == 1 {
-            cell.textLabel?.text = "Blue Damage"
-        }
-        else if index == 2{
-            cell.textLabel?.text = "Green Damage"
-        }
-        else if index == 3 {
-            cell.textLabel?.text = "Light Damage"
-        }
-        else if index == 4 {
-            cell.textLabel?.text = "Dark Damage"
-        }
-        cell.detailTextLabel?.text = String(dmg)
-        // Configure the cell...
-
+        setDetail(cell, index, dmg)
+        
         return cell
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    private func setDetail(_ cell: UITableViewCell, _ index:Int, _ dmg:Int) {
+        if index == 0 {
+            cell.textLabel?.text = "Total Red ATK"
+        }
+        else if index == 1 {
+            cell.textLabel?.text = "Total Blue ATK"
+        }
+        else if index == 2{
+            cell.textLabel?.text = "Total Green ATK"
+        }
+        else if index == 3 {
+            cell.textLabel?.text = "Total Light ATK"
+        }
+        else if index == 4 {
+            cell.textLabel?.text = "Total Dark ATK"
+        }
+        else if index == 5 {
+            cell.textLabel?.text = "Total Team HP"
+        }
+        else if index == 6{
+            cell.textLabel?.text = "Total Team RCV"
+        }
+        else if index == 7 {
+            cell.textLabel?.text = "Total Team Rarity"
+        }
+        else {
+            cell.textLabel?.text = "Total Team Cost"
+        }
+        
+        cell.detailTextLabel?.text = String(dmg)
     }
-    */
-
+    
+    
     /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

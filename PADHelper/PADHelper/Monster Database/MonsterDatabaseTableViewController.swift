@@ -291,7 +291,6 @@ class MonsterDatabaseTableViewController: UITableViewController, UISearchControl
                 else {
                     monster = api_monster_list[index!]
                 }
-                
                 monsterView.m_id = monster.id!
                 
             }

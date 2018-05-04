@@ -72,14 +72,17 @@ class MonsterView: UIViewController {
                 }
             }
         }
-
         
         if !exists {
             addFavorite()
             let alert = UIAlertController(title: "Favorite", message: "This monster has been added to Favorites!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            self.tabBarController?.viewControllers![2].viewWillAppear(true)
+        }
+        else {
+            let alert = UIAlertController(title: "Favorite", message: "This monster already exists in favorites.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -95,7 +98,9 @@ class MonsterView: UIViewController {
             print("Failed to save candidate.", err)
         }
         
-        super.tabBarController?.viewControllers![1].viewWillAppear(true)
+        self.tabBarController?.viewControllers![2].viewWillAppear(true)
+        self.tabBarController?.viewControllers![2].viewDidLoad()
+        
     }
     
     private func loadLabels() {
